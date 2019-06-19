@@ -1,7 +1,6 @@
 var MongoClient = require('mongodb').MongoClient
 var ObjectId = require('mongodb').ObjectId;
-var config = require('../config/config');
-
+var config = require('../config/config')
 var state = {
   db: null,
 }
