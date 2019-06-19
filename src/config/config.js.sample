@@ -1,3 +1,4 @@
+# Please make a copy of this file as config.js and update parameters appropriately
 module.exports = {
     mongousername : '<mongo username>',
     mongopassword : '<mongo password>',
