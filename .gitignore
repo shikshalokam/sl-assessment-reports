@@ -62,3 +62,6 @@ typings/
 
 # config.js 
 src/config/config.js
+
+# ignore logs
+logs/
