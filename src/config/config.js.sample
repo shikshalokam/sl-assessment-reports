@@ -1,9 +1,0 @@
-# Please make a copy of this file as config.js and update parameters appropriately
-module.exports = {
-    mongousername : '<mongo username>',
-    mongopassword : '<mongo password>',
-    mongohostname : '<mongo hostname>',
-    mongoport : '<mongo port>',
-    mongodb : '<mongo database name>',
-    appPortNo: '<app port>'
-}
