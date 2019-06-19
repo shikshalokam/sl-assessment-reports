@@ -4,12 +4,12 @@ log4js.configure({ // configure to use all types in different files.
     appenders: {
         errorschool: {
             type: 'file',
-            filename: "../../logs/school/errorschool.log",
+            filename: "logs/school/errorschool.log",
             category: 'error'
         },
         infoschool: {
             type: "file",
-            filename: "../../logs/school/successschool.log",
+            filename: "logs/school/successschool.log",
             category: 'info'
         }
     },
