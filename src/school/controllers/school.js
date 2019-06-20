@@ -329,32 +329,32 @@ module.exports = {
         }
         if ((req.body.request.filters.searchText) != "") {
             searchText = req.body.request.filters.searchText;
-            model.getSchoolBySearchText(searchText,function(err,data){
-                if(err) throw err ;
+            model.getSchoolBySearchText(searchText, function (err, data) {
+                if (err) throw err;
                 var schoolArr = new Array();
-                for(var i =0 ; i<data.length ; i++){
+                for (var i = 0; i < data.length; i++) {
                     resObj = {
-                        externalId : data[i].schoolInformation.externalId,
-                        name : data[i].schoolInformation.name
+                        externalId: data[i].schoolInformation.externalId,
+                        name: data[i].schoolInformation.name
                     }
                     schoolArr.push(resObj)
                 }
                 res.statusCode = 200;
-                    if (res.statusCode == 200) {
-                        responseCode = "OK"
-                    }
-                    resultdata = {
-                        responseCode: responseCode,
-                        result: {
-                            response: {
-                                count: schoolArr.length,
-                                content: {
-                                    school : schoolArr
-                                }
+                if (res.statusCode == 200) {
+                    responseCode = "OK"
+                }
+                resultdata = {
+                    responseCode: responseCode,
+                    result: {
+                        response: {
+                            count: schoolArr.length,
+                            content: {
+                                school: schoolArr
                             }
                         }
                     }
-                    res.send(resultdata)
+                }
+                res.send(resultdata)
             })
         }
     }
