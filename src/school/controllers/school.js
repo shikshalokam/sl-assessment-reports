@@ -47,32 +47,32 @@ module.exports = {
                     for (var i = 0; i < data.length; i++) {
                         // console.log(data[i].schoolInformation)
                         resultdata = {
-                            externalId : data[i].schoolInformation.externalId,
-                            name : data[i].schoolInformation.name,
-                            sdiLevel : data[i].schoolLevel,
-                            totalBoys : data[i].schoolInformation.totalBoys,
-                            highestGrade : data[i].schoolInformation.highestGrade,
-                            totalGirls : data[i].schoolInformation.totalGirls,
-                            phone : data[i].schoolInformation.phone ,
+                            externalId: data[i].schoolInformation.externalId,
+                            name: data[i].schoolInformation.name,
+                            sdiLevel: data[i].schoolLevel,
+                            totalBoys: data[i].schoolInformation.totalBoys,
+                            highestGrade: data[i].schoolInformation.highestGrade,
+                            totalGirls: data[i].schoolInformation.totalGirls,
+                            phone: data[i].schoolInformation.phone,
                             // emailId : emailId,
-                            addressLine1 : data[i].schoolInformation.addressLine1 ,
-                            state : data[i].schoolInformation.state,
+                            addressLine1: data[i].schoolInformation.addressLine1,
+                            state: data[i].schoolInformation.state,
                             principalName: data[i].schoolInformation.principalName,
-                            administration : data[i].schoolInformation.administration,
-                            gender : data[i].schoolInformation.gender,
-                            lowestGrade : data[i].schoolInformation.lowestGrade,
-                            pincode : data[i].schoolInformation.pincode,
+                            administration: data[i].schoolInformation.administration,
+                            gender: data[i].schoolInformation.gender,
+                            lowestGrade: data[i].schoolInformation.lowestGrade,
+                            pincode: data[i].schoolInformation.pincode,
                             // emailId2 : emailId2,
-                            country : data[i].schoolInformation.country,
-                            districtName : data[i].schoolInformation.districtName,
-                            gpsLocation : data[i].schoolInformation.gpsLocation,
-                            addressLine2 : data[i].schoolInformation.addressLine2,
+                            country: data[i].schoolInformation.country,
+                            districtName: data[i].schoolInformation.districtName,
+                            gpsLocation: data[i].schoolInformation.gpsLocation,
+                            addressLine2: data[i].schoolInformation.addressLine2,
                             // schoolNo : schoolNo,
-                            districtId : data[i].schoolInformation.districtId,
-                            city : data[i].schoolInformation.city,
-                            zoneId : data[i].schoolInformation.zoneId,
-                            shift : data[i].schoolInformation.shift,
-                            totalStudents : data[i].schoolInformation.totalStudents
+                            districtId: data[i].schoolInformation.districtId,
+                            city: data[i].schoolInformation.city,
+                            zoneId: data[i].schoolInformation.zoneId,
+                            shift: data[i].schoolInformation.shift,
+                            totalStudents: data[i].schoolInformation.totalStudents
                         }
                         schoolArray.push(resultdata)
                     }
@@ -101,32 +101,32 @@ module.exports = {
                             let data = await model.getSchoolInfoSpecific(querySchool[i]);
                             if (data != undefined) {
                                 resultdata = {
-                                    externalId : data.externalId,
-                                    name : data.name,
-                                    sdiLevel : data.sdiLevel,
-                                    totalBoys : data.totalBoys,
-                                    highestGrade : data.highestGrade,
-                                    totalGirls : data.totalGirls,
-                                    phone : data.phone ,
+                                    externalId: data.externalId,
+                                    name: data.name,
+                                    sdiLevel: data.sdiLevel,
+                                    totalBoys: data.totalBoys,
+                                    highestGrade: data.highestGrade,
+                                    totalGirls: data.totalGirls,
+                                    phone: data.phone,
                                     // emailId : emailId,
-                                    addressLine1 : data.addressLine1 ,
-                                    state : data.state,
+                                    addressLine1: data.addressLine1,
+                                    state: data.state,
                                     principalName: data.principalName,
-                                    administration : data.administration,
-                                    gender : data.gender,
-                                    lowestGrade : data.lowestGrade,
-                                    pincode : data.pincode,
+                                    administration: data.administration,
+                                    gender: data.gender,
+                                    lowestGrade: data.lowestGrade,
+                                    pincode: data.pincode,
                                     // emailId2 : emailId2,
-                                    country : data.country,
-                                    districtName : data.districtName,
-                                    gpsLocation : data.gpsLocation,
-                                    addressLine2 : data.addressLine2,
+                                    country: data.country,
+                                    districtName: data.districtName,
+                                    gpsLocation: data.gpsLocation,
+                                    addressLine2: data.addressLine2,
                                     // schoolNo : schoolNo,
-                                    districtId : data.districtId,
-                                    city : data.city,
-                                    zoneId : data.zoneId,
-                                    shift : data.shift,
-                                    totalStudents : data.totalStudents
+                                    districtId: data.districtId,
+                                    city: data.city,
+                                    zoneId: data.zoneId,
+                                    shift: data.shift,
+                                    totalStudents: data.totalStudents
                                 }
                                 schoolInfo.push(resultdata)
                             }
@@ -187,32 +187,32 @@ module.exports = {
             model.getSingleSchoolInfo(externalId, function (err, data) {
                 if (err) throw err;
                 resultdata = {
-                    externalId : data[0].schoolInformation.externalId,
-                    name : data[0].schoolInformation.name,
-                    sdiLevel : data[0].schoolLevel,
-                    totalBoys : data[0].schoolInformation.totalBoys,
-                    highestGrade : data[0].schoolInformation.highestGrade,
-                    totalGirls : data[0].schoolInformation.totalGirls,
-                    phone : data[0].schoolInformation.phone ,
+                    externalId: data[0].schoolInformation.externalId,
+                    name: data[0].schoolInformation.name,
+                    sdiLevel: data[0].schoolLevel,
+                    totalBoys: data[0].schoolInformation.totalBoys,
+                    highestGrade: data[0].schoolInformation.highestGrade,
+                    totalGirls: data[0].schoolInformation.totalGirls,
+                    phone: data[0].schoolInformation.phone,
                     // emailId : emailId,
-                    addressLine1 : data[0].schoolInformation.addressLine1 ,
-                    state : data[0].schoolInformation.state,
+                    addressLine1: data[0].schoolInformation.addressLine1,
+                    state: data[0].schoolInformation.state,
                     principalName: data[0].schoolInformation.principalName,
-                    administration : data[0].schoolInformation.administration,
-                    gender : data[0].schoolInformation.gender,
-                    lowestGrade : data[0].schoolInformation.lowestGrade,
-                    pincode : data[0].schoolInformation.pincode,
+                    administration: data[0].schoolInformation.administration,
+                    gender: data[0].schoolInformation.gender,
+                    lowestGrade: data[0].schoolInformation.lowestGrade,
+                    pincode: data[0].schoolInformation.pincode,
                     // emailId2 : emailId2,
-                    country : data[0].schoolInformation.country,
-                    districtName : data[0].schoolInformation.districtName,
-                    gpsLocation : data[0].schoolInformation.gpsLocation,
-                    addressLine2 : data[0].schoolInformation.addressLine2,
+                    country: data[0].schoolInformation.country,
+                    districtName: data[0].schoolInformation.districtName,
+                    gpsLocation: data[0].schoolInformation.gpsLocation,
+                    addressLine2: data[0].schoolInformation.addressLine2,
                     // schoolNo : schoolNo,
-                    districtId : data[0].schoolInformation.districtId,
-                    city : data[0].schoolInformation.city,
-                    zoneId : data[0].schoolInformation.zoneId,
-                    shift : data[0].schoolInformation.shift,
-                    totalStudents : data[0].schoolInformation.totalStudents
+                    districtId: data[0].schoolInformation.districtId,
+                    city: data[0].schoolInformation.city,
+                    zoneId: data[0].schoolInformation.zoneId,
+                    shift: data[0].schoolInformation.shift,
+                    totalStudents: data[0].schoolInformation.totalStudents
                 }
                 res.statusCode = 200;
                 if (res.statusCode == 200) {
@@ -291,5 +291,71 @@ module.exports = {
                 })
             })
         })
+    },
+
+    getSchoolBySearchText: function (req, res) {
+        if (!req.body.request) {
+            res.statusCode = 404
+            res.send({
+                responseCode: "NOT FOUND",
+                result: {
+                    response: {
+                        message: "request object is a required field in requestBody"
+                    }
+                }
+            })
+        }
+        if (!req.body.request.filters) {
+            res.statusCode = 404
+            res.send({
+                responseCode: "NOT FOUND",
+                result: {
+                    response: {
+                        message: "request.filter object is a required field in requestBody"
+                    }
+                }
+            })
+        }
+        if (!req.body.request.filters['searchText']) {
+            res.statusCode = 404
+            res.send({
+                responseCode: "NOT FOUND",
+                result: {
+                    response: {
+                        message: "request.filter.searchText  is a required field  or searchText is null in requestBody"
+                    }
+                }
+            })
+        }
+        if ((req.body.request.filters.searchText) != "") {
+            searchText = req.body.request.filters.searchText;
+            model.getSchoolBySearchText(searchText,function(err,data){
+                if(err) throw err ;
+                var schoolArr = new Array();
+                for(var i =0 ; i<data.length ; i++){
+                    resObj = {
+                        externalId : data[i].schoolInformation.externalId,
+                        name : data[i].schoolInformation.name
+                    }
+                    schoolArr.push(resObj)
+                }
+                res.statusCode = 200;
+                    if (res.statusCode == 200) {
+                        responseCode = "OK"
+                    }
+                    resultdata = {
+                        responseCode: responseCode,
+                        result: {
+                            response: {
+                                count: schoolArr.length,
+                                content: {
+                                    school : schoolArr
+                                }
+                            }
+                        }
+                    }
+                    res.send(resultdata)
+            })
+        }
     }
 }

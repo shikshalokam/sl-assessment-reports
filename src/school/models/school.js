@@ -13,7 +13,7 @@ module.exports = {
     // get specific(>=1) school info
     getSchoolInfoSpecific: function (querySchool) {
         return new Promise(function (resolve, reject) {
-            db.get().collection('sdiSchoolSubmissionsFlattened').find({ 'schoolInformation.externalId' : querySchool }).toArray(function (err, getInfo) {
+            db.get().collection('sdiSchoolSubmissionsFlattened').find({ 'schoolInformation.externalId': querySchool }).toArray(function (err, getInfo) {
                 if (err) {
                     reject(err)
                 } else {
@@ -49,6 +49,12 @@ module.exports = {
     getSchoolFilterByDistrict: function (callback) {
         db.get().collection('sdiSchoolSubmissionsFlattened').distinct('schoolInformation.districtName', function (err, docs) {
             callback(err, docs)
+        })
+    },
+
+    getSchoolBySearchText: function (searchText, callback) {
+        db.get().collection('sdiSchoolSubmissionsFlattened').find({ $text: { $search: searchText } }, { "schoolInformation.name": 1, "schoolInformation.externalId": 1, _id: 0 }).toArray(function (err, getInfo) {
+            callback(err, getInfo)
         })
     }
 }

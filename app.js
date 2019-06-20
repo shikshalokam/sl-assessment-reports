@@ -47,7 +47,8 @@ app.use(function (req, res, next) {
 
 // Connect to Mongo on start
 
-db.connect('mongodb://' + config.mongohostname + ':' + config.mongoport, function (err) {
+// db.connect('mongodb://' + config.mongohostname + ':' + config.mongoport, function (err) {
+  db.connect('mongodb://' + config.mongousername + ':' + config.mongopassword + '@' + config.mongohostname + ':' + config.mongoport, function (err) {
   if (err) {
     console.log('Unable to connect to Mongo.');
     console.log(err);
