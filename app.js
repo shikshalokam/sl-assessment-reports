@@ -9,8 +9,13 @@ var config = require('./src/config/config');
 var logger = require('./src/utils/logger');
 
 // view engine setup
+<<<<<<< HEAD
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'jade');
+=======
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
+>>>>>>> a52cc5d9c57e61ae18a1019bae14a8ca69fdecca
 
 
 app.use(express.json());

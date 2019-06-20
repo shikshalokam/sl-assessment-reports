@@ -357,5 +357,203 @@ module.exports = {
                 res.send(resultdata)
             })
         }
+    },
+
+    getProgramMetricsInfo: function (req, res) {
+        programId = req.params.programId
+        model.getProgramMetricsSchoolCount(programId, function (err, data) {
+            if (err) throw err;
+            totalschoolcount = 0;
+            sdiLevel4 = 0;
+            sdiLevel3 = 0;
+            sdiLevel2 = 0;
+            sdiLevel1 = 0;
+            themeSafetyLevel4 = 0;
+            themeSafetyLevel3 = 0;
+            themeSafetyLevel2 = 0;
+            themeSafetyLevel1 = 0;
+            themeTeachingLevel4 = 0;
+            themeTeachingLevel3 = 0;
+            themeTeachingLevel2 = 0;
+            themeTeachingLevel1 = 0;
+            themeCommunityLevel4 = 0;
+            themeCommunityLevel3 = 0;
+            themeCommunityLevel2 = 0;
+            themeCommunityLevel1 = 0;
+            var sdiLevelCalcArr = new Array();
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].schoolInformation.externalId) {
+                    totalschoolcount = totalschoolcount + 1;
+                }
+                if (isNaN(data[i].schoolLevel) == false) {
+                    if (data[i].schoolLevel == 4) {
+                        sdiLevel4 = sdiLevel4 + 1;
+                    }
+                    else if (data[i].schoolLevel == 3) {
+                        sdiLevel3 = sdiLevel3 + 1;
+                    }
+                    else if (data[i].schoolLevel == 2) {
+                        sdiLevel2 = sdiLevel2 + 1;
+                    }
+                    else if (data[i].schoolLevel == 1) {
+                        sdiLevel1 = sdiLevel1 + 1;
+                    }
+                }
+                if(isNaN(data[i].theme[0].themeLevel) == false && data[i].theme[0].name == "Safety and Security"){
+                    if (data[i].theme[0].themeLevel == 4) {
+                        themeSafetyLevel4 = themeSafetyLevel4 + 1;
+                    }
+                    else if (data[i].theme[0].themeLevel == 3) {
+                        themeSafetyLevel3 = themeSafetyLevel3 + 1;
+                    }
+                    else if (data[i].theme[0].themeLevel == 2) {
+                        themeSafetyLevel2 = themeSafetyLevel2 + 1;
+                    }
+                    else if (data[i].theme[0].themeLevel == 1) {
+                        themeSafetyLevel1 = themeSafetyLevel1 + 1;
+                    }
+                }
+
+                if(isNaN(data[i].theme[1].themeLevel) == false && data[i].theme[1].name == "Teaching and Learning"){
+                    if (data[i].theme[1].themeLevel == 4) {
+                        themeTeachingLevel4 = themeTeachingLevel4 + 1;
+                    }
+                    else if (data[i].theme[1].themeLevel == 3) {
+                        themeTeachingLevel3 = themeTeachingLevel3 + 1;
+                    }
+                    else if (data[i].theme[1].themeLevel == 2) {
+                        themeTeachingLevel2 = themeTeachingLevel2 + 1;
+                    }
+                    else if (data[i].theme[1].themeLevel == 1) {
+                        themeTeachingLevel1 = themeTeachingLevel1 + 1;
+                    }
+                }
+        
+                if(isNaN(data[i].theme[2].themeLevel) == false && data[i].theme[2].name == "Community Participation and EWS/DG Integration "){
+                    if (data[i].theme[2].themeLevel == 4) {
+                        themeCommunityLevel4 = themeCommunityLevel4 + 1;
+                    }
+                    else if (data[i].theme[2].themeLevel == 3) {
+                        themeCommunityLevel3 = themeCommunityLevel3 + 1;
+                    }
+                    else if (data[i].theme[2].themeLevel == 2) {
+                        themeCommunityLevel2 = themeCommunityLevel2 + 1;
+                    }
+                    else if (data[i].theme[2].themeLevel == 1) {
+                        themeCommunityLevel1 = themeCommunityLevel1 + 1;
+                    }
+                }
+            }
+            sdiLevelCalcArr.push(sdiLevel3)
+            sdiLevelCalcArr.push(sdiLevel2)
+            sdiLevelCalcArr.push(sdiLevel4)
+            sdiLevelCalcArr.push(sdiLevel1)
+            avgSdiScore = (sdiLevel4 + sdiLevel3 + sdiLevel2 + sdiLevel1) / totalschoolcount;
+
+            firsthighestLevel = Math.max.apply(null, sdiLevelCalcArr);
+            sdiLevelCalcArr.splice(sdiLevelCalcArr.indexOf(firsthighestLevel), 1);
+            secondhighestLevel = Math.max.apply(null, sdiLevelCalcArr);
+
+            firsthighestSafetyLevel = Math.max(themeSafetyLevel4,themeSafetyLevel3,themeSafetyLevel2,themeSafetyLevel1)
+            firsthighestTeachingLevel = Math.max(themeTeachingLevel4,themeTeachingLevel3,themeTeachingLevel2,themeTeachingLevel1)
+            firsthighestCommunityLevel = Math.max(themeCommunityLevel4,themeCommunityLevel3,themeCommunityLevel2,themeCommunityLevel1)
+          
+            if(firsthighestSafetyLevel == themeSafetyLevel4){
+                firsthighestThemeSafetyLevel = 4;
+            }
+            else if(firsthighestSafetyLevel == themeSafetyLevel3){
+                firsthighestThemeSafetyLevel = 3;
+            }
+            else if(firsthighestSafetyLevel == themeSafetyLevel2){
+                firsthighestThemeSafetyLevel = 2;
+            }
+            else if(firsthighestSafetyLevel == themeSafetyLevel1){
+                firsthighestThemeSafetyLevel = 1;
+            }
+
+            if(firsthighestTeachingLevel == themeTeachingLevel4){
+                firsthighestThemeTeachingLevel = 4;
+            }
+            else if(firsthighestTeachingLevel == themeTeachingLevel3){
+                firsthighestThemeTeachingLevel = 3;
+            }
+            else if(firsthighestTeachingLevel == themeTeachingLevel2){
+                firsthighestThemeTeachingLevel = 2;
+            }
+            else if(firsthighestTeachingLevel == themeTeachingLevel1){
+                firsthighestThemeTeachingLevel = 1;
+            }
+
+            if(firsthighestCommunityLevel == themeCommunityLevel4){
+                firsthighestThemeCommmunityLevel = 4;
+            }
+            else if(firsthighestCommunityLevel == themeCommunityLevel3){
+                firsthighestThemeCommunityLevel = 3;
+            }
+            else if(firsthighestCommunityLevel == themeCommunityLevel2){
+                firsthighestThemeCommunityLevel = 2;
+            }
+            else if(firsthighestCommunityLevel == themeCommunityLevel1){
+                firsthighestThemeCommunityLevel = 1;
+            }
+            
+            if(firsthighestLevel == sdiLevel4){
+                firsthighSchoolLevel = 4;
+            }
+            else if(firsthighestLevel == sdiLevel3){
+                firsthighSchoolLevel = 3;
+            }
+            else if(firsthighestLevel == sdiLevel2){
+                firsthighSchoolLevel = 2;
+            }
+            else if(firsthighestLevel == sdiLevel1){
+                firsthighSchoolLevel = 1;
+            }
+
+            if(secondhighestLevel == sdiLevel4){
+                secondhighSchoolLevel = 4;
+            }
+            else if(secondhighestLevel == sdiLevel3){
+                secondhighSchoolLevel = 3;
+            }
+            else if(secondhighestLevel == sdiLevel2){
+                secondhighSchoolLevel = 2;
+            }
+            else if(secondhighestLevel == sdiLevel1){
+                secondhighSchoolLevel = 1;
+            }
+            model.getGovSchools(function (err, data) {
+                if (err) throw err;
+                governmentSchools = data.length;
+                model.getPrivateSchools(function (err, data) {
+                    if (err) throw err;
+                    privateSchools = data.length;
+                    res.statusCode = 200;
+                    if (res.statusCode == 200) {
+                        responseCode = "OK"
+                    }
+                    resultdata = {
+                        responseCode: responseCode,
+                        result: {
+                            response: {
+                                content: {
+                                    programName: data[0].program.name,
+                                    totalSchools: totalschoolcount,
+                                    governmentSchools: governmentSchools,
+                                    privateSchools: privateSchools,
+                                    avgSdiScore: avgSdiScore,
+                                    highestSdi : firsthighSchoolLevel,
+                                    secondHighestSdi : secondhighSchoolLevel,
+                                    highestSafetyandSecurity : firsthighestThemeSafetyLevel,
+                                    highestTeachingandLearning : firsthighestThemeTeachingLevel,
+                                    highestCommunityandParticipation : firsthighestThemeCommunityLevel
+                                }
+                            }
+                        }
+                    }
+                    res.send(resultdata)    
+                })
+            })
+        })
     }
 }

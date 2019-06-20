@@ -52,9 +52,31 @@ module.exports = {
         })
     },
 
+    //search school by Text 
     getSchoolBySearchText: function (searchText, callback) {
         db.get().collection('sdiSchoolSubmissionsFlattened').find({ $text: { $search: searchText } }, { "schoolInformation.name": 1, "schoolInformation.externalId": 1, _id: 0 }).toArray(function (err, getInfo) {
             callback(err, getInfo)
+        })
+    },
+
+    //calculation of no of schools to the DCPCR program
+    getProgramMetricsSchoolCount :function(programId , callback){
+        db.get().collection('sdiSchoolSubmissionsFlattened').find({'program.externalId':programId}).toArray(function (err, getInfo) {
+            callback(err,getInfo)
+        })
+    },
+
+    //calculation of no of government schools
+    getGovSchools : function(callback){
+        db.get().collection('sdiSchoolSubmissionsFlattened').find({'schoolInformation.administration':{'$regex' : '^government$', '$options' : 'i'}}).toArray(function (err, getInfo) {
+            callback(err,getInfo)
+        })
+    },
+
+    //calculation of no of private schools
+    getPrivateSchools : function(callback){
+        db.get().collection('sdiSchoolSubmissionsFlattened').find({'schoolInformation.administration':{'$regex' : 'unaided', '$options' : 'i'}}).toArray(function(err,getInfo){
+            callback(err,getInfo)
         })
     }
 }

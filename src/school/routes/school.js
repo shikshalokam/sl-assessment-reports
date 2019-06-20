@@ -9,6 +9,8 @@ router.route('/schools').post(controllers.getAllSchoolInfo);
 
 router.route('/schools/search').post(controllers.getSchoolBySearchText);
 
+router.route('/schools/program/metrics/:programId').get(controllers.getProgramMetricsInfo);
+
 // router.route('/schools/schoolFilters').get(controllers.getSchoolFilters);
 
 // router.route('/schools/:id').get(controllers.getSingleSchoolInfo);
