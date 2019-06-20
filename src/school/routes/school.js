@@ -7,9 +7,11 @@ var logger = require('../../utils/logger');
 
 router.route('/schools').post(controllers.getAllSchoolInfo);
 
-router.route('/schools/schoolFilters').get(controllers.getSchoolFilters);
+router.route('/schools/search').post(controllers.getSchoolBySearchText);
 
-router.route('/schools/:id').get(controllers.getSingleSchoolInfo);
+// router.route('/schools/schoolFilters').get(controllers.getSchoolFilters);
+
+// router.route('/schools/:id').get(controllers.getSingleSchoolInfo);
 
 router.use((req, res, next) => {
     res.statusCode = 404;
