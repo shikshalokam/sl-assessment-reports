@@ -48,18 +48,17 @@ app.use(function (req, res, next) {
 // Connect to Mongo on start
 
 db.connect('mongodb://' + config.mongohostname + ':' + config.mongoport, function (err) {
-  // db.connect('mongodb://' + config.mongousername + ':' + config.mongopassword + '@' + config.mongohostname + ':' + config.mongoport, function (err) {
   if (err) {
     console.log('Unable to connect to Mongo.');
     console.log(err);
-    logger.loggererrorschool.error('Unable to connect to Mongo.');
-    logger.loggererrorschool.error(err);
+    // logger.loggererrorschool.error('Unable to connect to Mongo.');
+    // logger.loggererrorschool.error(err);
   } else {
     app.listen(config.appPortNo, function () {
       console.log('Listening on port ' + config.appPortNo + '...');
       console.log('Mongo connected');
-      logger.loggerinfoschool.info('Listening on port ' + config.appPortNo + '...');
-      logger.loggerinfoschool.info('Mongo connected')
+      // logger.loggerinfoschool.info('Listening on port ' + config.appPortNo + '...');
+      // logger.loggerinfoschool.info('Mongo connected')
     })
   }
 })
