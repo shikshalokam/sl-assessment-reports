@@ -11,9 +11,9 @@ router.route('/schools/search').post(controllers.getSchoolBySearchText);
 
 router.route('/schools/program/metrics/:programId').get(controllers.getProgramMetricsInfo);
 
-// router.route('/schools/schoolFilters').get(controllers.getSchoolFilters);
+router.route('/schools/district/metrics/:programId').get(controllers.getDistrictMetricsInfo);
 
-// router.route('/schools/:id').get(controllers.getSingleSchoolInfo);
+router.route('/schools/schoolFilters').get(controllers.getSchoolFilters);
 
 router.use((req, res, next) => {
     res.statusCode = 404;

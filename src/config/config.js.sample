@@ -1,8 +1,6 @@
 module.exports = {
-    mongousername : '',
-    mongopassword : '',
-    mongohostname : '',
-    mongoport : '',
-    mongodb : '',
-    appPortNo: ''
+    mongohostname : <mongodb hostname>,
+    mongoport : <mongodb portno>,
+    mongodb : <mongodb database name>,
+    appPortNo: <app portno>
 }
