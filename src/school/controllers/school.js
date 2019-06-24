@@ -89,7 +89,7 @@ module.exports = {
                             result: {
                                 response: {
                                     count: schoolAllArray.length,
-                                    content: schoolAllArray
+                                    data: schoolAllArray
                                 }
                             }
                         }
@@ -170,7 +170,7 @@ module.exports = {
                     result: {
                         response: {
                             count: schoolSpecificInfo.length,
-                            content: schoolSpecificInfo
+                            data: schoolSpecificInfo
                         }
                     }
                 }
@@ -230,7 +230,7 @@ module.exports = {
                                     responseCode: responseCode,
                                     result: {
                                         response: {
-                                            content: {
+                                            data: {
                                                 schoolType: schoolGender,
                                                 schoolAdministration: schoolAdmin,
                                                 schoolDistrict: schoolDistrict
@@ -313,7 +313,7 @@ module.exports = {
                         result: {
                             response: {
                                 count: schoolSearchArr.length,
-                                content: {
+                                data: {
                                     school: schoolSearchArr
                                 }
                             }
@@ -536,7 +536,7 @@ module.exports = {
                                     responseCode: responseCode,
                                     result: {
                                         response: {
-                                            content: {
+                                            data: {
                                                 programName: dataProgramMetrics[0].program.name,
                                                 totalSchools: totalschoolcount,
                                                 governmentSchools: governmentSchools,
@@ -616,10 +616,10 @@ module.exports = {
                                 districtName: dataDistrictInfo[0].schoolInformation.districtName,
                                 totalSchool: schoolcountDistrict,
                                 avgSdiOfDistrict: districtwiseSdiAvg,
-                                Level1Percent: districtL1Perc,
-                                Level2Percent: districtL2Perc,
-                                Level3Percent: districtL3Perc,
-                                Level4Percent: districtL4Perc
+                                level1Percent: districtL1Perc,
+                                level2Percent: districtL2Perc,
+                                level3Percent: districtL3Perc,
+                                level4Percent: districtL4Perc
                             }
                             districtArr.push(districtRes);
                         })
@@ -667,13 +667,13 @@ module.exports = {
                             responseCode: responseCode,
                             result: {
                                 response: {
-                                    content: {
+                                    data: {
                                         district: districtArr,
                                         wholeOfDelhi: {
-                                            Level1Percent: delhiL1Percent,
-                                            Level2Percent: delhiL2Percent,
-                                            Level3Percent: delhiL3Percent,
-                                            Level4Percent: delhiL4Percent
+                                            level1Percent: delhiL1Percent,
+                                            level2Percent: delhiL2Percent,
+                                            level3Percent: delhiL3Percent,
+                                            level4Percent: delhiL4Percent
                                         }
                                     }
                                 }
