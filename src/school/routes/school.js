@@ -21,7 +21,7 @@ router.use((req, res, next) => {
         request_path: '/api/v1/',
         message: 'API not found with these values',
         request_host: [
-            'community.shikshalokam.org'
+            'apidev.shikshalokam.org'
         ]
     });
 });
