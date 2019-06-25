@@ -5,7 +5,7 @@
     "title": "Public DCPCR Dashboards API",
     "description": "Public DCPCR Dashboards API"
   },
-  "host": "localhost:3000",
+  "host": "apidev.shikshalokam.org",
   "basePath": "/api/v1/",
   "tags": [
     {
