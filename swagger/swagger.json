@@ -1,0 +1,227 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Public DCPCR Dashboards API",
+    "description": "Public DCPCR Dashboards API"
+  },
+  "host": "apidev.shikshalokam.org",
+  "basePath": "/api/v1/",
+  "tags": [
+    {
+      "name": "Schools",
+      "description": "API's for dcpcr schools in the system"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/schools": {
+      "post": {
+        "tags": [
+          "Schools"
+        ],
+        "description": "API to get all and specific schools with details",
+        "parameters": [
+          {
+            "name": "school",
+            "in": "body",
+            "description": "school externalIds",
+            "schema": {
+              "$ref": "#/definitions/schoolInfoRequest"
+            }
+          },
+          {
+          "name": "authorization",
+          "in": "header",
+          "type": "string",
+          "required": true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schools/search": {
+      "post": {
+        "tags": [
+          "Schools"
+        ],
+        "description": "API to get schools with details matching a query string",
+        "parameters": [
+          {
+            "name": "school",
+            "in": "body",
+            "description": "search text",
+            "schema": {
+              "$ref": "#/definitions/searchTextRequest"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schools/program/metrics/{programId}": {
+      "get": {
+        "tags": [
+          "Schools"
+        ],
+        "descriptions": "API to get overall metrics for a given program",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "description": "Program ExternalId",
+            "schema": {
+              "type": "integer",
+              "minimun": 1
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/schools/district/metrics/{programId}": {
+      "get": {
+        "tags": [
+          "Schools"
+        ],
+        "descriptions": "API to get district wise and whole of delhi sdi scores",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "description": "Program ExternalId",
+            "schema": {
+              "type": "integer",
+              "minimun": 1
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "schoolInfoRequest": {
+      "required": [
+        "request"
+      ],
+      "properties": {
+        "request": {
+          "type": "object",
+          "properties": {
+            "filters": {
+              "type": "object",
+              "required": [
+                "filters"
+              ],
+              "properties": {
+                "schoolId": {
+                  "required": [
+                    "schoolId"
+                  ],
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "searchTextRequest": {
+      "required": [
+        "request"
+      ],
+      "properties": {
+        "request": {
+          "type": "object",
+          "properties": {
+            "filters": {
+              "type": "object",
+              "required": [
+                "filters"
+              ],
+              "properties": {
+                "searchText": {
+                  "required": [
+                    "searchText"
+                  ],
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

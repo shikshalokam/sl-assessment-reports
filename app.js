@@ -1,7 +1,8 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var bodyParser = require('body-parser')
+var swaggerUi = require('swagger-ui-express');
+var swaggerDocument = require('./swagger/swagger.json');
 var app = express();
 var db = require('./src/mongo/db');
 var routes = require('./src/school/routes/school');
@@ -18,6 +19,13 @@ var logger = require('./src/utils/logger');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// var options = {
+//   swaggerOptions: {
+//     authAction :{ JWT: {name: "JWT", schema: {type: "apiKey", in: "header", name: "Authorization", description: ""}, value: "Bearer <JWT>"} }
+//   }
+// };
+
+app.use('/api/v1/dcpcrapi-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1', routes);
 
 app.use(express.static(path.join(__dirname, 'public')));
