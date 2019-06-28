@@ -99,8 +99,8 @@ module.exports = {
                                 streamOffered: dataAllSchool[i].schoolInformation.streamOffered,
                                 awardsWon : awardsWon,
                                 innovativePractices : innovativePractices,
-                                website : website
-                                // themes : dataAllSchool[i].theme
+                                website : website,
+                                themes : dataAllSchool[i].theme
                             }
                             schoolAllArray.push(schoolArrGetAllInfo)
                         }
@@ -178,7 +178,7 @@ module.exports = {
                                     shift: dataSpecificSchool.schoolInformation.shift,
                                     totalStudents: dataSpecificSchool.schoolInformation.totalStudents,
                                     streamOffered: dataSpecificSchool.schoolInformation.streamOffered,
-                                    // themes : dataSpecificSchool.theme,
+                                    themes : dataSpecificSchool.theme,
                                     awardsWon : awardsWon,
                                     innovativePractices : innovativePractices,
                                     website : website
