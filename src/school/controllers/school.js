@@ -64,6 +64,11 @@ module.exports = {
                             } else {
                                 innovativePractices = dataAllSchool[i].schoolInformation.innovativePractices
                             }
+                            if(!dataAllSchool[i].schoolInformation.website){
+                                website = ""
+                            } else {
+                                website = dataAllSchool[i].schoolInformation.website
+                            }
                             schoolArrGetAllInfo = {
                                 externalId: dataAllSchool[i].schoolInformation.externalId,
                                 name: dataAllSchool[i].schoolInformation.name,
@@ -93,7 +98,8 @@ module.exports = {
                                 totalStudents: dataAllSchool[i].schoolInformation.totalStudents,
                                 streamOffered: dataAllSchool[i].schoolInformation.streamOffered,
                                 awardsWon : awardsWon,
-                                innovativePractices : innovativePractices
+                                innovativePractices : innovativePractices,
+                                website : website
                                 // themes : dataAllSchool[i].theme
                             }
                             schoolAllArray.push(schoolArrGetAllInfo)
@@ -139,6 +145,11 @@ module.exports = {
                                 } else {
                                     innovativePractices = dataSpecificSchool.schoolInformation.innovativePractices
                                 }
+                                if(!dataSpecificSchool.schoolInformation.website){
+                                    website = ""
+                                } else {
+                                    website = dataSpecificSchool.schoolInformation.website
+                                }
                                 schooldataSpecificInfo = {
                                     externalId: dataSpecificSchool.schoolInformation.externalId,
                                     name: dataSpecificSchool.schoolInformation.name,
@@ -169,7 +180,8 @@ module.exports = {
                                     streamOffered: dataSpecificSchool.schoolInformation.streamOffered,
                                     // themes : dataSpecificSchool.theme,
                                     awardsWon : awardsWon,
-                                    innovativePractices : innovativePractices
+                                    innovativePractices : innovativePractices,
+                                    website : website
                                 }
                                 schoolSpecificInfo.push(schooldataSpecificInfo)
                             }
