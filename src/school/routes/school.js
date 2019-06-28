@@ -5,22 +5,24 @@ var router = express.Router({ mergeParams: true });
 
 var logger = require('../../utils/logger');
 
-router.route('/schools').post(controllers.getAllSchoolInfo);
+router.route('/schools/:programId').post(controllers.getAllSchoolInfo);
 
-router.route('/schools/search').post(controllers.getSchoolBySearchText);
+router.route('/schools/search/:programId').post(controllers.getSchoolBySearchText);
 
 router.route('/schools/program/metrics/:programId').get(controllers.getProgramMetricsInfo);
 
 router.route('/schools/district/metrics/:programId').get(controllers.getDistrictMetricsInfo);
 
-router.route('/schools/schoolFilters').get(controllers.getSchoolFilters);
+router.route('/schools/schoolFilters/:programId').get(controllers.getSchoolFilters);
+
+router.route('/schools/frameworkInfo').get(controllers.getFrameworkInfo);
 
 router.use((req, res, next) => {
     res.statusCode = 404;
     res.send({
-        request_path: '/api/v1/',
+        requestPath: '/api/v1/',
         message: 'API not found with these values',
-        request_host: [
+        requestHost: [
             'apidev.shikshalokam.org'
         ]
     });

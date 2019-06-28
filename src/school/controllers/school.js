@@ -3,13 +3,17 @@ var router = express.Router();
 var model = require('../models/school')
 var logger = require('../../utils/logger');
 var deasync = require('deasync');
+var fs = require('fs');
+const { Parser } = require('json2csv');
+
 module.exports = {
 
     //get All school or >=1 school Info API
-    getAllSchoolInfo: async function (reqschoolinfo, resschoolinfo) {
-        if (!reqschoolinfo.body.request) {
-            resschoolinfo.statusCode = 404
-            resschoolinfo.send({
+    getAllSchoolInfo: async function (reqSchoolInfo, resSchoolInfo) {
+        programId = reqSchoolInfo.params.programId;
+        if (!reqSchoolInfo.body.request) {
+            resSchoolInfo.statusCode = 404
+            resSchoolInfo.send({
                 responseCode: "NOT FOUND",
                 result: {
                     response: {
@@ -18,9 +22,9 @@ module.exports = {
                 }
             })
         }
-        if (!reqschoolinfo.body.request.filters) {
-            resschoolinfo.statusCode = 404
-            resschoolinfo.send({
+        if (!reqSchoolInfo.body.request.filters) {
+            resSchoolInfo.statusCode = 404
+            resSchoolInfo.send({
                 responseCode: "NOT FOUND",
                 result: {
                     response: {
@@ -29,9 +33,9 @@ module.exports = {
                 }
             })
         }
-        if (!reqschoolinfo.body.request.filters.schoolId) {
-            resschoolinfo.statusCode = 404
-            resschoolinfo.send({
+        if (!reqSchoolInfo.body.request.filters.schoolId) {
+            resSchoolInfo.statusCode = 404
+            resSchoolInfo.send({
                 responseCode: "NOT FOUND",
                 result: {
                     response: {
@@ -42,46 +46,60 @@ module.exports = {
         }
 
         // check if schoolId entered is array or not
-        if (Array.isArray(reqschoolinfo.body.request.filters.schoolId) == true) {
+        if (Array.isArray(reqSchoolInfo.body.request.filters.schoolId) == true) {
             //check if schoolId array length is equal to 0
-            if ((reqschoolinfo.body.request.filters.schoolId).length == 0) {
+            if ((reqSchoolInfo.body.request.filters.schoolId).length == 0) {
                 //get all SchoolInfo from mongodb collection
-                model.getAllSchoolInfo()
-                    .then(function (dataallschool) {
+                model.getAllSchoolInfo(programId)
+                    .then(function (dataAllSchool) {
                         var schoolAllArray = new Array();
-                        for (var i = 0; i < dataallschool.length; i++) {
-                            schoolArrGetallInfo = {
-                                externalId: dataallschool[i].schoolInformation.externalId,
-                                name: dataallschool[i].schoolInformation.name,
-                                sdiLevel: dataallschool[i].schoolLevel,
-                                totalBoys: dataallschool[i].schoolInformation.totalBoys,
-                                highestGrade: dataallschool[i].schoolInformation.highestGrade,
-                                totalGirls: dataallschool[i].schoolInformation.totalGirls,
-                                phone: dataallschool[i].schoolInformation.phone,
-                                // emailId : emailId,
-                                addressLine1: dataallschool[i].schoolInformation.addressLine1,
-                                state: dataallschool[i].schoolInformation.state,
-                                principalName: dataallschool[i].schoolInformation.principalName,
-                                administration: dataallschool[i].schoolInformation.administration,
-                                gender: dataallschool[i].schoolInformation.gender,
-                                lowestGrade: dataallschool[i].schoolInformation.lowestGrade,
-                                pincode: dataallschool[i].schoolInformation.pincode,
-                                // emailId2 : emailId2,
-                                country: dataallschool[i].schoolInformation.country,
-                                districtName: dataallschool[i].schoolInformation.districtName,
-                                gpsLocation: dataallschool[i].schoolInformation.gpsLocation,
-                                addressLine2: dataallschool[i].schoolInformation.addressLine2,
-                                // schoolNo : schoolNo,
-                                districtId: dataallschool[i].schoolInformation.districtId,
-                                city: dataallschool[i].schoolInformation.city,
-                                zoneId: dataallschool[i].schoolInformation.zoneId,
-                                shift: dataallschool[i].schoolInformation.shift,
-                                totalStudents: dataallschool[i].schoolInformation.totalStudents
+                        for (var i = 0; i < dataAllSchool.length; i++) {
+                            if(!dataAllSchool[i].schoolInformation.awardsWon){
+                                awardsWon = []
+                            } else {
+                                awardsWon = dataAllSchool[i].schoolInformation.awardsWon
                             }
-                            schoolAllArray.push(schoolArrGetallInfo)
+                            if(!dataAllSchool[i].schoolInformation.innovativePractices){
+                                innovativePractices = []
+                            } else {
+                                innovativePractices = dataAllSchool[i].schoolInformation.innovativePractices
+                            }
+                            schoolArrGetAllInfo = {
+                                externalId: dataAllSchool[i].schoolInformation.externalId,
+                                name: dataAllSchool[i].schoolInformation.name,
+                                sdiLevel: dataAllSchool[i].schoolLevel,
+                                totalBoys: dataAllSchool[i].schoolInformation.totalBoys,
+                                highestGrade: dataAllSchool[i].schoolInformation.highestGrade,
+                                totalGirls: dataAllSchool[i].schoolInformation.totalGirls,
+                                phone: dataAllSchool[i].schoolInformation.phone,
+                                // emailId : emailId,
+                                addressLine1: dataAllSchool[i].schoolInformation.addressLine1,
+                                state: dataAllSchool[i].schoolInformation.state,
+                                principalName: dataAllSchool[i].schoolInformation.principalName,
+                                administration: dataAllSchool[i].schoolInformation.administration,
+                                gender: dataAllSchool[i].schoolInformation.gender,
+                                lowestGrade: dataAllSchool[i].schoolInformation.lowestGrade,
+                                pincode: dataAllSchool[i].schoolInformation.pincode,
+                                // emailId2 : emailId2,
+                                country: dataAllSchool[i].schoolInformation.country,
+                                districtName: dataAllSchool[i].schoolInformation.districtName,
+                                gpsLocation: dataAllSchool[i].schoolInformation.gpsLocation,
+                                addressLine2: dataAllSchool[i].schoolInformation.addressLine2,
+                                // schoolNo : schoolNo,
+                                districtId: dataAllSchool[i].schoolInformation.districtId,
+                                city: dataAllSchool[i].schoolInformation.city,
+                                zoneId: dataAllSchool[i].schoolInformation.zoneId,
+                                shift: dataAllSchool[i].schoolInformation.shift,
+                                totalStudents: dataAllSchool[i].schoolInformation.totalStudents,
+                                streamOffered: dataAllSchool[i].schoolInformation.streamOffered,
+                                awardsWon : awardsWon,
+                                innovativePractices : innovativePractices
+                                // themes : dataAllSchool[i].theme
+                            }
+                            schoolAllArray.push(schoolArrGetAllInfo)
                         }
-                        resschoolinfo.statusCode = 200;
-                        if (resschoolinfo.statusCode == 200) {
+                        resSchoolInfo.statusCode = 200;
+                        if (resSchoolInfo.statusCode == 200) {
                             responseCode = "OK"
                         }
                         resultdataAllSchoolInfo = {
@@ -93,7 +111,7 @@ module.exports = {
                                 }
                             }
                         }
-                        resschoolinfo.send(resultdataAllSchoolInfo)
+                        resSchoolInfo.send(resultdataAllSchoolInfo)
                     })
                     .catch(function (err) {
                         console.log("Error in getting All School Information")
@@ -101,43 +119,57 @@ module.exports = {
                     })
             }
             // get schoolInfo for particular schoolId entered in an req.body schoolId array
-            else if ((reqschoolinfo.body.request.filters.schoolId).length > 0) {
-                querySchool = reqschoolinfo.body.request.filters.schoolId
+            else if ((reqSchoolInfo.body.request.filters.schoolId).length > 0) {
+                querySchool = reqSchoolInfo.body.request.filters.schoolId
                 var schoolSpecificInfo = new Array()
                 for (var i = 0; i < querySchool.length; i++) {
                     //check if schooId is number or not
                     if (isNaN(querySchool[i]) == false) {
                         try {
                             //get Particular School Info for given schoolId
-                            let dataSpecificSchool = await model.getSchoolInfoSpecific(querySchool[i]);
+                            let dataSpecificSchool = await model.getSchoolInfoSpecific(querySchool[i],programId);
                             if (dataSpecificSchool != undefined) {
+                                if(!dataSpecificSchool.schoolInformation.awardsWon){
+                                    awardsWon = []
+                                } else {
+                                    awardsWon = dataSpecificSchool.schoolInformation.awardsWon
+                                }
+                                if(!dataSpecificSchool.schoolInformation.innovativePractices){
+                                    innovativePractices = []
+                                } else {
+                                    innovativePractices = dataSpecificSchool.schoolInformation.innovativePractices
+                                }
                                 schooldataSpecificInfo = {
-                                    externalId: dataSpecificSchool.externalId,
-                                    name: dataSpecificSchool.name,
-                                    sdiLevel: dataSpecificSchool.sdiLevel,
-                                    totalBoys: dataSpecificSchool.totalBoys,
-                                    highestGrade: dataSpecificSchool.highestGrade,
-                                    totalGirls: dataSpecificSchool.totalGirls,
-                                    phone: dataSpecificSchool.phone,
+                                    externalId: dataSpecificSchool.schoolInformation.externalId,
+                                    name: dataSpecificSchool.schoolInformation.name,
+                                    sdiLevel: dataSpecificSchool.schoolInformation.sdiLevel,
+                                    totalBoys: dataSpecificSchool.schoolInformation.totalBoys,
+                                    highestGrade: dataSpecificSchool.schoolInformation.highestGrade,
+                                    totalGirls: dataSpecificSchool.schoolInformation.totalGirls,
+                                    phone: dataSpecificSchool.schoolInformation.phone,
                                     // emailId : emailId,
-                                    addressLine1: dataSpecificSchool.addressLine1,
-                                    state: dataSpecificSchool.state,
-                                    principalName: dataSpecificSchool.principalName,
-                                    administration: dataSpecificSchool.administration,
-                                    gender: dataSpecificSchool.gender,
-                                    lowestGrade: dataSpecificSchool.lowestGrade,
-                                    pincode: dataSpecificSchool.pincode,
+                                    addressLine1: dataSpecificSchool.schoolInformation.addressLine1,
+                                    state: dataSpecificSchool.schoolInformation.state,
+                                    principalName: dataSpecificSchool.schoolInformation.principalName,
+                                    administration: dataSpecificSchool.schoolInformation.administration,
+                                    gender: dataSpecificSchool.schoolInformation.gender,
+                                    lowestGrade: dataSpecificSchool.schoolInformation.lowestGrade,
+                                    pincode: dataSpecificSchool.schoolInformation.pincode,
                                     // emailId2 : emailId2,
-                                    country: dataSpecificSchool.country,
-                                    districtName: dataSpecificSchool.districtName,
-                                    gpsLocation: dataSpecificSchool.gpsLocation,
-                                    addressLine2: dataSpecificSchool.addressLine2,
+                                    country: dataSpecificSchool.schoolInformation.country,
+                                    districtName: dataSpecificSchool.schoolInformation.districtName,
+                                    gpsLocation: dataSpecificSchool.schoolInformation.gpsLocation,
+                                    addressLine2: dataSpecificSchool.schoolInformation.addressLine2,
                                     // schoolNo : schoolNo,
-                                    districtId: dataSpecificSchool.districtId,
-                                    city: dataSpecificSchool.city,
-                                    zoneId: dataSpecificSchool.zoneId,
-                                    shift: dataSpecificSchool.shift,
-                                    totalStudents: dataSpecificSchool.totalStudents
+                                    districtId: dataSpecificSchool.schoolInformation.districtId,
+                                    city: dataSpecificSchool.schoolInformation.city,
+                                    zoneId: dataSpecificSchool.schoolInformation.zoneId,
+                                    shift: dataSpecificSchool.schoolInformation.shift,
+                                    totalStudents: dataSpecificSchool.schoolInformation.totalStudents,
+                                    streamOffered: dataSpecificSchool.schoolInformation.streamOffered,
+                                    // themes : dataSpecificSchool.theme,
+                                    awardsWon : awardsWon,
+                                    innovativePractices : innovativePractices
                                 }
                                 schoolSpecificInfo.push(schooldataSpecificInfo)
                             }
@@ -148,8 +180,8 @@ module.exports = {
                         }
                     }
                     else {
-                        resschoolinfo.statusCode = 400
-                        resschoolinfo.send({
+                        resSchoolInfo.statusCode = 400
+                        resSchoolInfo.send({
                             responseCode: "CLIENT_ERROR",
                             result: {
                                 response: {
@@ -161,8 +193,8 @@ module.exports = {
                         return
                     }
                 }
-                resschoolinfo.statusCode = 200;
-                if (resschoolinfo.statusCode == 200) {
+                resSchoolInfo.statusCode = 200;
+                if (resSchoolInfo.statusCode == 200) {
                     responseCode = "OK"
                 }
                 resultdataSpecificSchool = {
@@ -174,12 +206,12 @@ module.exports = {
                         }
                     }
                 }
-                resschoolinfo.send(resultdataSpecificSchool)
+                resSchoolInfo.send(resultdataSpecificSchool)
             }
         }
         else {
-            resultdataSpecificSchool.statusCode = 400
-            resultdataSpecificSchool.send({
+            resSchoolInfo.statusCode = 400
+            resSchoolInfo.send({
                 responseCode: "CLIENT_ERROR",
                 result: {
                     response: {
@@ -192,11 +224,12 @@ module.exports = {
 
     // getSchool Filters like schoolTypes , schoolAdministration , schoolDistrict Info API
     getSchoolFilters: function (reqGetFilters, resGetFilters) {
+        programId = reqGetFilters.params.programId
         var schoolGender = new Array();
         var schoolAdmin = new Array();
         var schoolDistrict = new Array();
         //get gender info from mongodb collection
-        model.getSchoolFilterByGender()
+        model.getSchoolFilterByGender(programId)
             .then(function (dataSchoolGender) {
                 for (var i = 0; i < dataSchoolGender.length; i++) {
                     if (dataSchoolGender[i] != '') {
@@ -205,7 +238,7 @@ module.exports = {
                     }
                 }
                 //get administration info from mongodb collection
-                model.getSchoolFilterByAdmin()
+                model.getSchoolFilterByAdmin(programId)
                     .then(function (dataSchoolAdmin) {
                         for (var i = 0; i < dataSchoolAdmin.length; i++) {
                             if (dataSchoolAdmin[i] != '') {
@@ -214,7 +247,7 @@ module.exports = {
                             }
                         }
                         //get district info from mongodb collection
-                        model.getSchoolFilterByDistrict()
+                        model.getSchoolFilterByDistrict(programId)
                             .then(function (dataSchoolDistrict) {
                                 for (var i = 0; i < dataSchoolDistrict.length; i++) {
                                     if (dataSchoolDistrict[i] != '') {
@@ -258,6 +291,7 @@ module.exports = {
 
     //getSchool Information based on search text match - API
     getSchoolBySearchText: function (reqSearchText, resSearchText) {
+        programId = reqSearchText.params.programId
         if (!reqSearchText.body.request) {
             resSearchText.statusCode = 404
             resSearchText.send({
@@ -294,7 +328,7 @@ module.exports = {
         if ((reqSearchText.body.request.filters.searchText) != "") {
             searchText = reqSearchText.body.request.filters.searchText;
             // search school by searchText on matching indexes in mongodb collection
-            model.getSchoolBySearchText(searchText)
+            model.getSchoolBySearchText(searchText,programId)
                 .then(function (dataSearchText) {
                     var schoolSearchArr = new Array();
                     for (var i = 0; i < dataSearchText.length; i++) {
@@ -334,7 +368,7 @@ module.exports = {
         //get no of schools belongs this programId from mongodb collection
         model.getProgramMetricsSchoolCount(programId)
             .then(function (dataProgramMetrics) {
-                totalschoolcount = 0;
+                totalSchoolCount = 0;
                 sdiLevel4 = 0;
                 sdiLevel3 = 0;
                 sdiLevel2 = 0;
@@ -347,15 +381,19 @@ module.exports = {
                 themeTeachingLevel3 = 0;
                 themeTeachingLevel2 = 0;
                 themeTeachingLevel1 = 0;
-                themeCommunityLevel4 = 0;
-                themeCommunityLevel3 = 0;
-                themeCommunityLevel2 = 0;
-                themeCommunityLevel1 = 0;
+                themeSocialLevel4 = 0;
+                themeSocialLevel3 = 0;
+                themeSocialLevel2 = 0;
+                themeSocialLevel1 = 0;
+                themeParentLevel4 = 0;
+                themeParentLevel3 = 0;
+                themeParentLevel2 = 0;
+                themeParentLevel1 = 0;
                 var sdiLevelCalcArr = new Array();
                 for (var i = 0; i < dataProgramMetrics.length; i++) {
                     //total number of schools for this programId
                     if (dataProgramMetrics[i].schoolInformation.externalId) {
-                        totalschoolcount = totalschoolcount + 1;
+                        totalSchoolCount = totalSchoolCount + 1;
                     }
                     //check for schoolRating is string or number
                     if (isNaN(dataProgramMetrics[i].schoolLevel) == false) {
@@ -417,23 +455,43 @@ module.exports = {
                         }
                     }
 
-                    //"Community and Participation" theme rating calculation
-                    if (isNaN(dataProgramMetrics[i].theme[2].themeLevel) == false && dataProgramMetrics[i].theme[2].name == "Community Participation and EWS/DG Integration ") {
+                    //"Social Inclusion Index" theme rating calculation
+                    if (isNaN(dataProgramMetrics[i].theme[2].themeLevel) == false && dataProgramMetrics[i].theme[2].name == "Social Inclusion Index") {
                         //if theme rating is 4 -> count the number of schools which has rating 4
                         if (dataProgramMetrics[i].theme[2].themeLevel == 4) {
-                            themeCommunityLevel4 = themeCommunityLevel4 + 1;
+                            themeSocialLevel4 = themeSocialLevel4 + 1;
                         }
                         //if theme rating is 3 -> count the number of schools which has rating 3
                         else if (dataProgramMetrics[i].theme[2].themeLevel == 3) {
-                            themeCommunityLevel3 = themeCommunityLevel3 + 1;
+                            themeSocialLevel3 = themeSocialLevel3 + 1;
                         }
                         //if theme rating is 2 -> count the number of schools which has rating 2
                         else if (dataProgramMetrics[i].theme[2].themeLevel == 2) {
-                            themeCommunityLevel2 = themeCommunityLevel2 + 1;
+                            themeSocialLevel2 = themeSocialLevel2 + 1;
                         }
                         //if theme rating is 1 -> count the number of schools which has rating 1
                         else if (dataProgramMetrics[i].theme[2].themeLevel == 1) {
-                            themeCommunityLevel1 = themeCommunityLevel1 + 1;
+                            themeSocialLevel1 = themeSocialLevel1 + 1;
+                        }
+                    }
+
+                    //"Parent Participation Index" theme rating calculation
+                    if (isNaN(dataProgramMetrics[i].theme[3].themeLevel) == false && dataProgramMetrics[i].theme[3].name == "Parent Participation Index") {
+                        //if theme rating is 4 -> count the number of schools which has rating 4
+                        if (dataProgramMetrics[i].theme[3].themeLevel == 4) {
+                            themeParentLevel4 = themeParentLevel4 + 1;
+                        }
+                        //if theme rating is 3 -> count the number of schools which has rating 3
+                        else if (dataProgramMetrics[i].theme[3].themeLevel == 3) {
+                            themeParentLevel3 = themeParentLevel3 + 1;
+                        }
+                        //if theme rating is 2 -> count the number of schools which has rating 2
+                        else if (dataProgramMetrics[i].theme[3].themeLevel == 2) {
+                            themeParentLevel2 = themeParentLevel2 + 1;
+                        }
+                        //if theme rating is 1 -> count the number of schools which has rating 1
+                        else if (dataProgramMetrics[i].theme[3].themeLevel == 1) {
+                            themeParentLevel1 = themeParentLevel1 + 1;
                         }
                     }
                 }
@@ -442,90 +500,105 @@ module.exports = {
                 sdiLevelCalcArr.push(sdiLevel4)
                 sdiLevelCalcArr.push(sdiLevel1)
                 //calculation average sdiLevel
-                avgSdiScore = (sdiLevel4 + sdiLevel3 + sdiLevel2 + sdiLevel1) / totalschoolcount;
+                avgSdiScore = (sdiLevel4 + sdiLevel3 + sdiLevel2 + sdiLevel1) / totalSchoolCount;
 
                 //first highest sdiLevel
-                firsthighestSdiLevel = Math.max.apply(null, sdiLevelCalcArr);
-                sdiLevelCalcArr.splice(sdiLevelCalcArr.indexOf(firsthighestSdiLevel), 1);
+                firstHighestSdiLevel = Math.max.apply(null, sdiLevelCalcArr);
+                sdiLevelCalcArr.splice(sdiLevelCalcArr.indexOf(firstHighestSdiLevel), 1);
                 //second highest sdiLevel
-                secondhighestSdiLevel = Math.max.apply(null, sdiLevelCalcArr);
+                secondHighestSdiLevel = Math.max.apply(null, sdiLevelCalcArr);
 
                 //fisrthighest Theme Levels
-                firsthighestSafetyLevel = Math.max(themeSafetyLevel4, themeSafetyLevel3, themeSafetyLevel2, themeSafetyLevel1)
-                firsthighestTeachingLevel = Math.max(themeTeachingLevel4, themeTeachingLevel3, themeTeachingLevel2, themeTeachingLevel1)
-                firsthighestCommunityLevel = Math.max(themeCommunityLevel4, themeCommunityLevel3, themeCommunityLevel2, themeCommunityLevel1)
+                firstHighestSafetyLevel = Math.max(themeSafetyLevel4, themeSafetyLevel3, themeSafetyLevel2, themeSafetyLevel1)
+                firstHighestTeachingLevel = Math.max(themeTeachingLevel4, themeTeachingLevel3, themeTeachingLevel2, themeTeachingLevel1)
+                firstHighestSocialLevel = Math.max(themeSocialLevel4, themeSocialLevel3, themeSocialLevel2, themeSocialLevel1)
+                firstHighestParentLevel = Math.max(themeParentLevel4, themeParentLevel3, themeParentLevel2, themeParentLevel1)
 
                 //setting level numbers
-                if (firsthighestSafetyLevel == themeSafetyLevel4) {
-                    firsthighestThemeSafetyLevel = 4;
+                if (firstHighestSafetyLevel == themeSafetyLevel4) {
+                    firstHighestThemeSafetyLevel = 4;
                 }
-                else if (firsthighestSafetyLevel == themeSafetyLevel3) {
-                    firsthighestThemeSafetyLevel = 3;
+                else if (firstHighestSafetyLevel == themeSafetyLevel3) {
+                    firstHighestThemeSafetyLevel = 3;
                 }
-                else if (firsthighestSafetyLevel == themeSafetyLevel2) {
-                    firsthighestThemeSafetyLevel = 2;
+                else if (firstHighestSafetyLevel == themeSafetyLevel2) {
+                    firstHighestThemeSafetyLevel = 2;
                 }
-                else if (firsthighestSafetyLevel == themeSafetyLevel1) {
-                    firsthighestThemeSafetyLevel = 1;
-                }
-
-                if (firsthighestTeachingLevel == themeTeachingLevel4) {
-                    firsthighestThemeTeachingLevel = 4;
-                }
-                else if (firsthighestTeachingLevel == themeTeachingLevel3) {
-                    firsthighestThemeTeachingLevel = 3;
-                }
-                else if (firsthighestTeachingLevel == themeTeachingLevel2) {
-                    firsthighestThemeTeachingLevel = 2;
-                }
-                else if (firsthighestTeachingLevel == themeTeachingLevel1) {
-                    firsthighestThemeTeachingLevel = 1;
+                else if (firstHighestSafetyLevel == themeSafetyLevel1) {
+                    firstHighestThemeSafetyLevel = 1;
                 }
 
-                if (firsthighestCommunityLevel == themeCommunityLevel4) {
-                    firsthighestThemeCommmunityLevel = 4;
+                if (firstHighestTeachingLevel == themeTeachingLevel4) {
+                    firstHighestThemeTeachingLevel = 4;
                 }
-                else if (firsthighestCommunityLevel == themeCommunityLevel3) {
-                    firsthighestThemeCommunityLevel = 3;
+                else if (firstHighestTeachingLevel == themeTeachingLevel3) {
+                    firstHighestThemeTeachingLevel = 3;
                 }
-                else if (firsthighestCommunityLevel == themeCommunityLevel2) {
-                    firsthighestThemeCommunityLevel = 2;
+                else if (firstHighestTeachingLevel == themeTeachingLevel2) {
+                    firstHighestThemeTeachingLevel = 2;
                 }
-                else if (firsthighestCommunityLevel == themeCommunityLevel1) {
-                    firsthighestThemeCommunityLevel = 1;
-                }
-
-                if (firsthighestSdiLevel == sdiLevel4) {
-                    firsthighSchoolLevel = 4;
-                }
-                else if (firsthighestSdiLevel == sdiLevel3) {
-                    firsthighSchoolLevel = 3;
-                }
-                else if (firsthighestSdiLevel == sdiLevel2) {
-                    firsthighSchoolLevel = 2;
-                }
-                else if (firsthighestSdiLevel == sdiLevel1) {
-                    firsthighSchoolLevel = 1;
+                else if (firstHighestTeachingLevel == themeTeachingLevel1) {
+                    firstHighestThemeTeachingLevel = 1;
                 }
 
-                if (secondhighestSdiLevel == sdiLevel4) {
-                    secondhighSchoolLevel = 4;
+                if (firstHighestSocialLevel == themeSocialLevel4) {
+                    firstHighestThemeSocialLevel = 4;
                 }
-                else if (secondhighestSdiLevel == sdiLevel3) {
-                    secondhighSchoolLevel = 3;
+                else if (firstHighestSocialLevel == themeSocialLevel2) {
+                    firstHighestThemeSocialLevel = 3;
                 }
-                else if (secondhighestSdiLevel == sdiLevel2) {
-                    secondhighSchoolLevel = 2;
+                else if (firstHighestSocialLevel == themeSocialLevel3) {
+                    firstHighestThemeSocialLevel = 2;
                 }
-                else if (secondhighestSdiLevel == sdiLevel1) {
-                    secondhighSchoolLevel = 1;
+                else if (firstHighestSocialLevel == themeSocialLevel1) {
+                    firstHighestThemeSocialLevel = 1;
                 }
+
+                if (firstHighestParentLevel == themeParentLevel4) {
+                    firstHighestThemeParentLevel = 4;
+                }
+                else if (firstHighestParentLevel == themeParentLevel3) {
+                    firstHighestThemeParentLevel = 3;
+                }
+                else if (firstHighestParentLevel == themeParentLevel2) {
+                    firstHighestThemeParentLevel = 2;
+                }
+                else if (firstHighestParentLevel == themeParentLevel1) {
+                    firstHighestThemeParentLevel = 1;
+                }
+
+                if (firstHighestSdiLevel == sdiLevel4) {
+                    firstHighSchoolLevel = 4;
+                }
+                else if (firstHighestSdiLevel == sdiLevel3) {
+                    firstHighSchoolLevel = 3;
+                }
+                else if (firstHighestSdiLevel == sdiLevel2) {
+                    firstHighSchoolLevel = 2;
+                }
+                else if (firstHighestSdiLevel == sdiLevel1) {
+                    firstHighSchoolLevel = 1;
+                }
+
+                if (secondHighestSdiLevel == sdiLevel4) {
+                    secondHighSchoolLevel = 4;
+                }
+                else if (secondHighestSdiLevel == sdiLevel3) {
+                    secondHighSchoolLevel = 3;
+                }
+                else if (secondHighestSdiLevel == sdiLevel2) {
+                    secondHighSchoolLevel = 2;
+                }
+                else if (secondHighestSdiLevel == sdiLevel1) {
+                    secondHighSchoolLevel = 1;
+                }
+                
                 //get total number of government schools in mongodb collections
-                model.getGovSchools()
+                model.getGovSchools(programId)
                     .then(function (dataGovSchools) {
                         governmentSchools = dataGovSchools.length;
                         //get total number of private schools(All schools which has UnAided keyword) in mongodb collections
-                        model.getPrivateSchools()
+                        model.getPrivateSchools(programId)
                             .then(function (dataPrivSchools) {
                                 privateSchools = dataPrivSchools.length;
                                 resProgramMetrics.statusCode = 200;
@@ -538,15 +611,16 @@ module.exports = {
                                         response: {
                                             data: {
                                                 programName: dataProgramMetrics[0].program.name,
-                                                totalSchools: totalschoolcount,
+                                                totalSchools: totalSchoolCount,
                                                 governmentSchools: governmentSchools,
                                                 privateSchools: privateSchools,
                                                 avgSdiScore: avgSdiScore,
-                                                highestSdi: firsthighSchoolLevel,
-                                                secondHighestSdi: secondhighSchoolLevel,
-                                                highestSafetyandSecurity: firsthighestThemeSafetyLevel,
-                                                highestTeachingandLearning: firsthighestThemeTeachingLevel,
-                                                highestCommunityandParticipation: firsthighestThemeCommunityLevel
+                                                highestSdi: firstHighSchoolLevel,
+                                                secondHighestSdi: secondHighSchoolLevel,
+                                                highestSafetyandSecurity: firstHighestThemeSafetyLevel,
+                                                highestTeachingandLearning: firstHighestThemeTeachingLevel,
+                                                highestSocialIclusionIndex: firstHighestThemeSocialLevel,
+                                                highestParentParticipationIndex: firstHighestThemeParentLevel
                                             }
                                         }
                                     }
@@ -581,45 +655,49 @@ module.exports = {
                     //get districtInfo for matching districtName and programId
                     model.getSingleDistrictInfo(programId, districtName)
                         .then(function (dataDistrictInfo) {
-                            schoolcountDistrict = dataDistrictInfo.length;
-                            sumcountDistrictL1 = 0;
-                            sumcountDistrictL2 = 0;
-                            sumcountDistrictL3 = 0;
-                            sumcountDistrictL4 = 0;
-                            for (var j = 0; j < schoolcountDistrict; j++) {
+                            schoolCountDistrict = dataDistrictInfo.length;
+                            sumCountDistrictL1 = 0;
+                            sumCountDistrictL2 = 0;
+                            sumCountDistrictL3 = 0;
+                            sumCountDistrictL4 = 0;
+                            for (var j = 0; j < schoolCountDistrict; j++) {
                                 if (isNaN(dataDistrictInfo[j].schoolLevel) == false) {
                                     if (dataDistrictInfo[j].schoolLevel == 1) {
-                                        sumcountDistrictL1 = sumcountDistrictL1 + 1
+                                        sumCountDistrictL1 = sumCountDistrictL1 + 1
                                     }
                                     else if (dataDistrictInfo[j].schoolLevel == 2) {
-                                        sumcountDistrictL2 = sumcountDistrictL2 + 1
+                                        sumCountDistrictL2 = sumCountDistrictL2 + 1
                                     }
                                     else if (dataDistrictInfo[j].schoolLevel == 3) {
-                                        sumcountDistrictL3 = sumcountDistrictL3 + 1
+                                        sumCountDistrictL3 = sumCountDistrictL3 + 1
                                     }
                                     else if (dataDistrictInfo[j].schoolLevel == 4) {
-                                        sumcountDistrictL4 = sumcountDistrictL4 + 1
+                                        sumCountDistrictL4 = sumCountDistrictL4 + 1
                                     }
                                 }
                             }
-                            districtwiseSdiSum = sumcountDistrictL1 + sumcountDistrictL2 + sumcountDistrictL3 + sumcountDistrictL4;
+                            districtwiseSdiSum = sumCountDistrictL1 + sumCountDistrictL2 + sumCountDistrictL3 + sumCountDistrictL4;
                             //calculate average of sdiLevel for each district
-                            districtwiseSdiAvg = districtwiseSdiSum / schoolcountDistrict;
+                            districtwiseSdiAvg = districtwiseSdiSum / schoolCountDistrict;
                             //calculate districtLevels Percentage
-                            districtL1Perc = (sumcountDistrictL1 / schoolcountDistrict) * 100;
-                            districtL2Perc = (sumcountDistrictL2 / schoolcountDistrict) * 100;
-                            districtL3Perc = (sumcountDistrictL3 / schoolcountDistrict) * 100;
-                            districtL4Perc = (sumcountDistrictL4 / schoolcountDistrict) * 100;
-                            // districtL1Perc1 = districtL1Perc.toFixed(2)
+                            districtwiseSdiAvg1 = districtwiseSdiAvg.toFixed(2)
+                            districtL1Perc = (sumCountDistrictL1 / schoolCountDistrict) * 100;
+                            districtL1Perc1 = districtL1Perc.toFixed(1)
+                            districtL2Perc = (sumCountDistrictL2 / schoolCountDistrict) * 100;
+                            districtL2Perc1 = districtL2Perc.toFixed(1)
+                            districtL3Perc = (sumCountDistrictL3 / schoolCountDistrict) * 100;
+                            districtL3Perc1 = districtL3Perc.toFixed(1)
+                            districtL4Perc = (sumCountDistrictL4 / schoolCountDistrict) * 100;
+                            districtL4Perc1 = districtL4Perc.toFixed(1)
                             // districtL4Perc1 = ParseInt(districtL4Perc.toFixed(2) + '%)
                             var districtRes = {
                                 districtName: dataDistrictInfo[0].schoolInformation.districtName,
-                                totalSchool: schoolcountDistrict,
-                                avgSdiOfDistrict: districtwiseSdiAvg,
-                                level1Percent: districtL1Perc,
-                                level2Percent: districtL2Perc,
-                                level3Percent: districtL3Perc,
-                                level4Percent: districtL4Perc
+                                totalSchool: schoolCountDistrict,
+                                avgSdiOfDistrict: districtwiseSdiAvg1,
+                                level1Percent: districtL1Perc1,
+                                level2Percent: districtL2Perc1,
+                                level3Percent: districtL3Perc1,
+                                level4Percent: districtL4Perc1
                             }
                             districtArr.push(districtRes);
                         })
@@ -635,30 +713,34 @@ module.exports = {
                 //get metrics info for whole of delhi
                 model.getSchoolInfoDelhi(programId)
                     .then(function (dataWholeDelhi) {
-                        delhischoolL1 = 0;
-                        delhischoolL2 = 0;
-                        delhischoolL3 = 0;
-                        delhischoolL4 = 0;
+                        delhiSchoolL1 = 0;
+                        delhiSchoolL2 = 0;
+                        delhiSchoolL3 = 0;
+                        delhiSchoolL4 = 0;
                         for (var k = 0; k < dataWholeDelhi.length; k++) {
                             if (dataWholeDelhi[k].schoolInformation.districtName && dataWholeDelhi[k].schoolInformation.districtName != "" && isNaN(dataWholeDelhi[k].schoolLevel) == false) {
                                 if (dataWholeDelhi[k].schoolLevel == 1) {
-                                    delhischoolL1 = delhischoolL1 + 1;
+                                    delhiSchoolL1 = delhiSchoolL1 + 1;
                                 }
                                 else if (dataWholeDelhi[k].schoolLevel == 2) {
-                                    delhischoolL2 = delhischoolL2 + 1;
+                                    delhiSchoolL2 = delhiSchoolL2 + 1;
                                 }
                                 else if (dataWholeDelhi[k].schoolLevel == 3) {
-                                    delhischoolL3 = delhischoolL3 + 1;
+                                    delhiSchoolL3 = delhiSchoolL3 + 1;
                                 }
                                 else if (dataWholeDelhi[k].schoolLevel == 4) {
-                                    delhischoolL4 = delhischoolL4 + 1
+                                    delhiSchoolL4 = delhiSchoolL4 + 1
                                 }
                             }
                         }
-                        delhiL1Percent = (delhischoolL1 / dataWholeDelhi.length) * 100;
-                        delhiL2Percent = (delhischoolL2 / dataWholeDelhi.length) * 100;
-                        delhiL3Percent = (delhischoolL3 / dataWholeDelhi.length) * 100;
-                        delhiL4Percent = (delhischoolL4 / dataWholeDelhi.length) * 100;
+                        delhiL1Percent = (delhiSchoolL1 / dataWholeDelhi.length) * 100;
+                        delhiL1Percent1 = delhiL1Percent.toFixed(1)
+                        delhiL2Percent = (delhiSchoolL2 / dataWholeDelhi.length) * 100;
+                        delhiL2Percent1 = delhiL2Percent.toFixed(1)
+                        delhiL3Percent = (delhiSchoolL3 / dataWholeDelhi.length) * 100;
+                        delhiL3Percent1 = delhiL3Percent.toFixed(1)
+                        delhiL4Percent = (delhiSchoolL4 / dataWholeDelhi.length) * 100;
+                        delhiL4Percent1 = delhiL4Percent.toFixed(1)
                         resDistrictMetrics.statusCode = 200;
                         if (resDistrictMetrics.statusCode == 200) {
                             responseCode = "OK"
@@ -670,10 +752,10 @@ module.exports = {
                                     data: {
                                         district: districtArr,
                                         wholeOfDelhi: {
-                                            level1Percent: delhiL1Percent,
-                                            level2Percent: delhiL2Percent,
-                                            level3Percent: delhiL3Percent,
-                                            level4Percent: delhiL4Percent
+                                            level1Percent: delhiL1Percent1,
+                                            level2Percent: delhiL2Percent1,
+                                            level3Percent: delhiL3Percent1,
+                                            level4Percent: delhiL4Percent1
                                         }
                                     }
                                 }
@@ -689,6 +771,208 @@ module.exports = {
             .catch(function (err) {
                 console.log("Error in getting Unique District for the ProgramId in getDistrictMetricsInfo API")
                 throw err;
+            })
+    },
+
+    getFrameworkInfo: function (reqFramework, resFramework) {
+        if (!reqFramework.query.frameworkId && !reqFramework.query.reportType) {
+            resFramework.statusCode = 404
+            resFramework.send({
+                responseCode: "NOT FOUND",
+                result: {
+                    response: {
+                        message: "query string frameworkId and reportType is required field"
+                    }
+                }
+            })
+        }
+        frameworkId = reqFramework.query.frameworkId;
+        reportType = reqFramework.query.reportType;
+        model.getFrameworkInfo(frameworkId)
+            .then(async function (dataFrameworkInfo) {
+                themelen = dataFrameworkInfo[0].themes.length
+                var resTheme = new Array()
+                for (var i = 0; i < themelen; i++) {
+                    resultTheme = {}
+                    resultTheme['Theme'] = dataFrameworkInfo[0].themes[i].name
+                    resultTheme['ThemeId'] = dataFrameworkInfo[0].themes[i].externalId
+                    if (Array.isArray(dataFrameworkInfo[0].themes[i].children) == true) {
+                        var subthemeArr = new Array()
+                        for (var j = 0; j < dataFrameworkInfo[0].themes[i].children.length; j++) {
+                            subtheme = dataFrameworkInfo[0].themes[i].children[j].label;
+                            themepushObj = {
+                                name: dataFrameworkInfo[0].themes[i].children[j].name,
+                                externalId: dataFrameworkInfo[0].themes[i].children[j].externalId
+                            }
+
+                            if (Array.isArray(dataFrameworkInfo[0].themes[i].children[j].children) == true) {
+                                subsubthemeLen = dataFrameworkInfo[0].themes[i].children[j].children.length;
+                                var subsubthemeArr = new Array()
+                                for (var l = 0; l < subsubthemeLen; l++) {
+                                    var criteriaArr = new Array()
+                                    subsubtheme = dataFrameworkInfo[0].themes[i].children[j].children[l].label;
+                                    themesubpushObj = {
+                                        name: dataFrameworkInfo[0].themes[i].children[j].children[l].name,
+                                        externalId: dataFrameworkInfo[0].themes[i].children[j].children[l].externalId
+                                    }
+
+                                    if (Array.isArray(dataFrameworkInfo[0].themes[i].children[j].children[l].criteria) == true) {
+
+                                        criteriaLen = dataFrameworkInfo[0].themes[i].children[j].children[l].criteria.length;
+                                        for (var k = 0; k < criteriaLen; k++) {
+                                            criteriaId = dataFrameworkInfo[0].themes[i].children[j].children[l].criteria[k];
+                                            let datacriteriaInfo = await model.getCriteriaInfo(criteriaId)
+                                            rubricLevel1 = datacriteriaInfo[0].rubric.levels
+                                            var rubricArr = new Array()
+                                            var rubricObj = {}
+                                            for (var rub in rubricLevel1) {
+                                                rubricLevel = 'rubric' + rubricLevel1[rub]['level'];
+                                                rubricDescp = rubricLevel1[rub]['description'];
+                                                rubricAlg = rubricLevel1[rub]['level'] + 'Algorithm';
+                                                rubricExp = rubricLevel1[rub]['expression']
+                                                // rubricObj = {
+                                                //     rubricLevel : rubricDescp,
+                                                //     rubricAlg : rubricExp
+                                                // }
+                                                rubricObj[rubricLevel] = rubricDescp;
+                                                rubricObj[rubricAlg] = rubricExp
+                                                // rubricArr.push(rubricObj)
+                                            }
+                                            criteriaObj = {
+                                                name: datacriteriaInfo[0].name,
+                                                externalId: datacriteriaInfo[0].externalId,
+                                                rubric: rubricObj
+                                            }
+                                            criteriaArr.push(criteriaObj)
+                                        }
+                                        themesubpushObj['criteria'] = criteriaArr
+                                        subsubthemeArr.push(themesubpushObj)
+                                        // resultTheme['Criteria'] = criteriaArr
+                                    }
+                                }
+                                themepushObj[subsubtheme] = subsubthemeArr
+                                subthemeArr.push(themepushObj)
+                            } else if (Array.isArray(dataFrameworkInfo[0].themes[i].children[j].criteria) == true) {
+                                criteriaLen = dataFrameworkInfo[0].themes[i].children[j].criteria.length;
+                                var criteriaArr = new Array()
+                                for (var k = 0; k < criteriaLen; k++) {
+                                    criteriaId = dataFrameworkInfo[0].themes[i].children[j].criteria[k];
+                                    let datacriteriaInfo = await model.getCriteriaInfo(criteriaId)
+                                    rubricLevel1 = datacriteriaInfo[0].rubric.levels
+                                    var rubricArr = new Array()
+                                    var rubricObj = {}
+                                    for (var rub in rubricLevel1) {
+                                        rubricLevel = 'rubric' + rubricLevel1[rub]['level'];
+                                        rubricDescp = rubricLevel1[rub]['description'];
+                                        rubricAlg = rubricLevel1[rub]['level'] + 'Algorithm';
+                                        rubricExp = rubricLevel1[rub]['expression']
+                                        rubricObj[rubricLevel] = rubricDescp;
+                                        rubricObj[rubricAlg] = rubricExp
+                                        // rubricArr.push(rubricObj)
+                                    }
+                                    criteriaObj = {
+                                        name: datacriteriaInfo[0].name,
+                                        externalId: datacriteriaInfo[0].externalId,
+                                        rubric: rubricObj
+                                    }
+                                    criteriaArr.push(criteriaObj)
+                                }
+                                themepushObj['criteria'] = criteriaArr
+                                subthemeArr.push(themepushObj)
+                            }
+
+                        }
+                        subThemeLabel = dataFrameworkInfo[0].themes[i].children[0].label
+                        resultTheme[subThemeLabel] = subthemeArr;
+                    } else if (Array.isArray(dataFrameworkInfo[0].themes[i].criteria) == true) {
+                        criteriaLen = dataFrameworkInfo[0].themes[i].criteria.length;
+                        for (var k = 0; k < criteriaLen; k++) {
+                            criteriaId = dataFrameworkInfo[0].themes[i].criteria[k];
+                            let datacriteriaInfo = await model.getCriteriaInfo(criteriaId)
+                            rubricLevel1 = datacriteriaInfo[0].rubric.levels
+                            var rubricArr = new Array()
+                            var rubricObj = {}
+                            for (var rub in rubricLevel1) {
+                                rubricLevel = 'rubric' + rubricLevel1[rub]['level'];
+                                rubricDescp = rubricLevel1[rub]['description'];
+                                rubricAlg = rubricLevel1[rub]['level'] + 'Algorithm';
+                                rubricExp = rubricLevel1[rub]['expression']
+                                rubricObj[rubricLevel] = rubricDescp;
+                                rubricObj[rubricAlg] = rubricExp
+                                // rubricArr.push(rubricObj)
+                            }
+                            criteriaObj = {
+                                name: datacriteriaInfo[0].name,
+                                externalId: datacriteriaInfo[0].externalId,
+                                rubric: rubricObj
+                            }
+                            criteriaArr.push(criteriaObj)
+                        }
+                        resultTheme['criteria'] = criteriaArr
+                    }
+                    resTheme.push(resultTheme)
+                }
+                if (reportType == "json") {
+                    resFramework.send(resTheme)
+                } else if (reportType == "csv") {
+                    if (Array.isArray(dataFrameworkInfo[0].themes[0].children[0].children) == true) {
+                        if (Array.isArray(dataFrameworkInfo[0].themes[0].children[0].children[0].criteria) == true) {
+                            var keys = Object.keys(resTheme[0])
+                            if (typeof (resTheme[0][keys[2]]) == "object") {
+                                var keys1 = Object.keys(resTheme[0][keys[2]][0])
+                                if (typeof (resTheme[0][keys[2]][0][keys1[2]]) == "object") {
+                                    var keys2 = Object.keys(resTheme[0][keys[2]][0][keys1[2]][0])
+                                    if (typeof (resTheme[0][keys[2]][0][keys1[2]][0][keys2[2]]) == "object") {
+                                        var keys3 = Object.keys(resTheme[0][keys[2]][0][keys1[2]][0][keys2[2]][0])
+                                        if (typeof (resTheme[0][keys[2]][0][keys1[2]][0][keys2[2]][0][keys3[2]]) == "object") {
+                                            var keys4 = Object.keys(resTheme[0][keys[2]][0][keys1[2]][0][keys2[2]][0][keys3[2]])
+                                        }
+                                    }
+                                }
+                            }
+                            const fields = [keys[0], keys[1], keys[2] + '.' + keys1[0], keys[2] + '.' + keys1[1], keys[2] + '.' + keys1[2] + '.' + keys2[0], keys[2] + '.' + keys1[2] + '.' + keys2[1], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[0], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[1], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[0], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[1], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[2], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[3], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[4], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[5], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[6], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[7]];
+                            const json2csvParser = new Parser({ fields, unwind: [keys[2], keys[2] + '.' + keys1[2], keys[2] + '.' + keys1[2] + '.' + keys2[2], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2]] });
+                            const csv = json2csvParser.parse(resTheme);
+                            resFramework.send(csv)
+                        }
+                    }
+                    else if (Array.isArray(dataFrameworkInfo[0].themes[0].children) == true) {
+                        if (Array.isArray(dataFrameworkInfo[0].themes[0].children[0].criteria) == true) {
+                            var keys = Object.keys(resTheme[0])
+                            if (typeof (resTheme[0][keys[2]]) == "object") {
+                                var keys1 = Object.keys(resTheme[0][keys[2]][0])
+                                if (typeof (resTheme[0][keys[2]][0][keys1[2]]) == "object") {
+                                    var keys2 = Object.keys(resTheme[0][keys[2]][0][keys1[2]][0])
+                                    if (typeof (resTheme[0][keys[2]][0][keys1[2]][0][keys2[2]]) == "object") {
+                                        var keys3 = Object.keys(resTheme[0][keys[2]][0][keys1[2]][0][keys2[2]])
+                                    }
+                                }
+                            }
+                            const fields = [keys[0], keys[1], keys[2] + '.' + keys1[0], keys[2] + '.' + keys1[1], keys[2] + '.' + keys1[2] + '.' + keys2[0], keys[2] + '.' + keys1[2] + '.' + keys2[1], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[0], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[1], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[3], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[4], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[5], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[6], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[7]];
+                            const json2csvParser = new Parser({ fields, unwind: [keys[2], keys[2] + '.' + keys1[2], keys[2] + '.' + keys1[2] + '.' + keys2[2]] });
+                            const csv = json2csvParser.parse(resTheme);
+                            resFramework.send(csv)
+                        }
+                    } else if (Array.isArray(dataFrameworkInfo[0].themes) == true) {
+                        if (Array.isArray(dataFrameworkInfo[0].themes[0].criteria) == true) {
+                            var keys = Object.keys(resTheme[0])
+                            if (typeof (resTheme[0][keys[2]]) == "object") {
+                                var keys1 = Object.keys(resTheme[0][keys[2]][0])
+                                if (typeof (resTheme[0][keys[2]][0][keys1[2]]) == "object") {
+                                    var keys2 = Object.keys(resTheme[0][keys[2]][0][keys1[2]])
+                                }
+                            }
+                            const fields = [keys[0], keys[1], keys[2] + '.' + keys1[0], keys[2] + '.' + keys1[1], keys[2] + '.' + keys1[2] + '.' + keys2[0], keys[2] + '.' + keys1[2] + '.' + keys2[1], keys[2] + '.' + keys1[2] + '.' + keys2[2], keys[2] + '.' + keys1[2] + '.' + keys2[3], keys[2] + '.' + keys1[2] + '.' + keys2[4], keys[2] + '.' + keys1[2] + '.' + keys2[5], keys[2] + '.' + keys1[2] + '.' + keys2[6], keys[2] + '.' + keys1[2] + '.' + keys2[7]];
+                            const json2csvParser = new Parser({ fields, unwind: [keys[2], keys[2] + '.' + keys1[2]] });
+                            const csv = json2csvParser.parse(resTheme);
+                            resFramework.send(csv)
+                        }
+                    }
+                }
+            })
+            .catch(function (errFrameworkInfo) {
+                console.log("Error in getting Framework Info");
+                throw errFrameworkInfo;
             })
     }
 }
