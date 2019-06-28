@@ -24,7 +24,7 @@
     "application/json"
   ],
   "paths": {
-    "/schools": {
+    "/schools/{programId}": {
       "post": {
         "tags": [
           "Schools"
@@ -40,10 +40,20 @@
             }
           },
           {
-          "name": "authorization",
-          "in": "header",
-          "type": "string",
-          "required": true
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "description": "Program ExternalId",
+            "schema": {
+              "type": "integer",
+              "minimun": 1
+            }
           }
         ],
         "produces": [
@@ -63,7 +73,7 @@
         }
       }
     },
-    "/schools/search": {
+    "/schools/search/{programId}": {
       "post": {
         "tags": [
           "Schools"
@@ -77,6 +87,22 @@
             "schema": {
               "$ref": "#/definitions/searchTextRequest"
             }
+          },
+          {
+            "name": "programId",
+            "in": "path",
+            "required": true,
+            "description": "Program ExternalId",
+            "schema": {
+              "type": "integer",
+              "minimun": 1
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true
           }
         ],
         "produces": [
@@ -112,6 +138,12 @@
               "type": "integer",
               "minimun": 1
             }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true
           }
         ],
         "produces": [
@@ -147,6 +179,12 @@
               "type": "integer",
               "minimun": 1
             }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "required": true
           }
         ],
         "produces": [

@@ -10,8 +10,8 @@ var config = require('./src/config/config');
 var logger = require('./src/utils/logger');
 
 // view engine setup
-//app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'jade');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
 
