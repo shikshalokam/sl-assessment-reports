@@ -6,7 +6,7 @@ module.exports = {
     // get all school info
     getAllSchoolInfo: function (programId) {
         return new Promise(function (resolve, reject) {
-            db.get().collection('sdiSchoolSubmissionsFlattened').find({'program.externalId':programId}).toArray(function (errGetAllSchool, getAllSchoolInfoDocs) {
+            db.get().collection('sdiSchoolSubmissionsFlattened').find({ 'program.externalId': programId }).toArray(function (errGetAllSchool, getAllSchoolInfoDocs) {
                 if (errGetAllSchool) {
                     reject(errGetAllSchool)
                 } else {
@@ -17,9 +17,9 @@ module.exports = {
     },
 
     // get specific(>=1) school info
-    getSchoolInfoSpecific: function (querySchool,programId) {
+    getSchoolInfoSpecific: function (querySchool, programId) {
         return new Promise(function (resolve, reject) {
-            db.get().collection('sdiSchoolSubmissionsFlattened').find({ $and: [ {'schoolInformation.externalId':querySchool},{'program.externalId':programId}] }).toArray(function (errSpecificSchool, getSpecificSchoolDocs) {
+            db.get().collection('sdiSchoolSubmissionsFlattened').find({ $and: [{ 'schoolInformation.externalId': querySchool }, { 'program.externalId': programId }] }).toArray(function (errSpecificSchool, getSpecificSchoolDocs) {
                 if (errSpecificSchool) {
                     reject(errSpecificSchool)
                 } else {
@@ -33,7 +33,7 @@ module.exports = {
     //get unique value of gender column from schoolInfo 
     getSchoolFilterByGender: function (programId) {
         return new Promise(function (resolve, reject) {
-            db.get().collection('sdiSchoolSubmissionsFlattened').distinct('schoolInformation.gender',{'program.externalId':programId}, function (errSchoolGender, getSchoolGenderDocs) {
+            db.get().collection('sdiSchoolSubmissionsFlattened').distinct('schoolInformation.gender', { 'program.externalId': programId }, function (errSchoolGender, getSchoolGenderDocs) {
                 if (errSchoolGender) {
                     reject(errSchoolGender)
                 } else {
@@ -46,7 +46,7 @@ module.exports = {
     //get unique value of administration column from schoolInfo
     getSchoolFilterByAdmin: function (programId) {
         return new Promise(function (resolve, reject) {
-            db.get().collection('sdiSchoolSubmissionsFlattened').distinct('schoolInformation.administration',{'program.externalId':programId}, function (errSchoolAdmin, getSchoolAdminDocs) {
+            db.get().collection('sdiSchoolSubmissionsFlattened').distinct('schoolInformation.administration', { 'program.externalId': programId }, function (errSchoolAdmin, getSchoolAdminDocs) {
                 if (errSchoolAdmin) {
                     reject(errSchoolAdmin)
                 } else {
@@ -59,7 +59,7 @@ module.exports = {
     //get unique value of districtName column from schoolInfo
     getSchoolFilterByDistrict: function (programId) {
         return new Promise(function (resolve, reject) {
-            db.get().collection('sdiSchoolSubmissionsFlattened').distinct('schoolInformation.districtName',{'program.externalId':programId}, function (errSchoolDistrict, getSchoolDistrictDocs) {
+            db.get().collection('sdiSchoolSubmissionsFlattened').distinct('schoolInformation.districtName', { 'program.externalId': programId }, function (errSchoolDistrict, getSchoolDistrictDocs) {
                 if (errSchoolDistrict) {
                     reject(errSchoolDistrict)
                 } else {
@@ -70,9 +70,9 @@ module.exports = {
     },
 
     //search school by Text 
-    getSchoolBySearchText: function (searchText,programId) {
+    getSchoolBySearchText: function (searchText, programId) {
         return new Promise(function (resolve, reject) {
-            db.get().collection('sdiSchoolSubmissionsFlattened').find({ $and: [ {$text: { $search: searchText}},{'program.externalId':programId}]}, { "schoolInformation.name": 1, "schoolInformation.externalId": 1, _id: 0 }).toArray(function (errSearchText, getSearchTextDocs) {
+            db.get().collection('sdiSchoolSubmissionsFlattened').find({ $and: [{ $text: { $search: searchText } }, { 'program.externalId': programId }] }, { "schoolInformation.name": 1, "schoolInformation.externalId": 1, _id: 0 }).toArray(function (errSearchText, getSearchTextDocs) {
                 if (errSearchText) {
                     reject(errSearchText)
                 } else {
@@ -98,7 +98,7 @@ module.exports = {
     //calculation of no of government schools
     getGovSchools: function (programId) {
         return new Promise(function (resolve, reject) {
-            db.get().collection('sdiSchoolSubmissionsFlattened').find({ $and: [ {'schoolInformation.administration': { '$regex': '^government$', '$options': 'i' }},{'program.externalId':programId}] }).toArray(function (errGovSchool, getGovSchoolsDocs) {
+            db.get().collection('sdiSchoolSubmissionsFlattened').find({ $and: [{ 'schoolInformation.administration': { '$regex': '^government$', '$options': 'i' } }, { 'program.externalId': programId }] }).toArray(function (errGovSchool, getGovSchoolsDocs) {
                 if (errGovSchool) {
                     reject(errGovSchool)
                 } else {
@@ -111,7 +111,7 @@ module.exports = {
     //calculation of no of private schools
     getPrivateSchools: function (programId) {
         return new Promise(function (resolve, reject) {
-            db.get().collection('sdiSchoolSubmissionsFlattened').find({ $and: [{ 'schoolInformation.administration': { '$regex': 'unaided', '$options': 'i' } },{'program.externalId':programId}] }).toArray(function (errPrivSchools, getPrivSchoolsDocs) {
+            db.get().collection('sdiSchoolSubmissionsFlattened').find({ $and: [{ 'schoolInformation.administration': { '$regex': 'unaided', '$options': 'i' } }, { 'program.externalId': programId }] }).toArray(function (errPrivSchools, getPrivSchoolsDocs) {
                 if (errPrivSchools) {
                     reject(errPrivSchools)
                 } else {
