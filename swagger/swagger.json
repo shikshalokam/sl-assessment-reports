@@ -203,6 +203,45 @@
           }
         }
       }
+    },
+    "/schools/reportCard": {
+      "get": {
+        "tags": [
+          "Schools"
+        ],
+        "descriptions": "API to generate school Report Card as csv or json file ",
+        "parameters": [
+          {
+            "name": "programId",
+            "in": "query",
+            "description": "Program ExternalId",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "reportType",
+            "in": "query",
+            "description": "format of reportCard",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
