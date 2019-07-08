@@ -1063,7 +1063,7 @@ module.exports = {
                                         var criteriaObj = {}
                                         criteriaObj['name'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].name
                                         criteriaObj['level'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].score
-                                        criteriaObj['score'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].weightedScore
+                                        criteriaObj['score'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].weight
                                         criteriaArr.push(criteriaObj)
                                     }
                                 }
@@ -1081,7 +1081,7 @@ module.exports = {
                     resReportInfo.send(resSchoolArr)
                 } else if (reportType == 'csv') {
                     resReportInfo.statusCode = 200
-                    const fields = ['schoolId', 'schoolName', 'administrationType', 'sdiIndex', 'sdiScore', { label: 'themeName', value: 'theme.name' }, { label: 'themeIndex', value: 'theme.index' }, { label: 'themeScore', value: 'theme.score' }, { label: 'criteriaName', value: 'theme.criteria.name' }, { label: 'criteriaLevel', value: 'theme.criteria.level' },{ label: 'criteriaScore', value: 'theme.criteria.score' }];
+                    const fields = ['schoolId', 'schoolName', 'administrationType', 'sdiIndex', 'sdiScore', { label: 'themeName', value: 'theme.name' }, { label: 'themeIndex', value: 'theme.index' }, { label: 'themeScore', value: 'theme.score' }, { label: 'criteriaName', value: 'theme.criteria.name' }, { label: 'criteriaLevel', value: 'theme.criteria.level' },{ label: 'criteriaWeight', value: 'theme.criteria.score' }];
                     const json2csvParser = new Parser({ fields, unwind: ['theme', 'theme.criteria'] });
                     const csv = json2csvParser.parse(resSchoolArr);
                     resReportInfo.send(csv)
