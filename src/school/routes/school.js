@@ -17,7 +17,9 @@ router.route('/schools/schoolFilters/:programId').get(controllers.getSchoolFilte
 
 router.route('/schools/frameworkInfo').get(controllers.getFrameworkInfo);
 
-router.route('/schools/reportCard').get(controllers.getReportInfo)
+router.route('/schools/reportCard').get(controllers.getReportInfo);
+
+router.route('/schools/criteriaQuestions').get(controllers.getCriteriaQuestions);
 
 router.use((req, res, next) => {
     res.statusCode = 404;

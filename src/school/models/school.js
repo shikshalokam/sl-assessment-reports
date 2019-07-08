@@ -184,5 +184,31 @@ module.exports = {
                 }
             })
         })
+    },
+
+    //get Submissions Info
+    getSubmissionInfo: function (programId) {
+        return new Promise(function (resolve, reject) {
+            db.get().collection('submissions').find({ "$and": [{ "status": "completed" }, { "programExternalId": programId }] }, { 'criterias': 1, 'answers': 1 }).toArray(function (errSubmissionsInfo, dataSubmissionsInfo) {
+                if (errSubmissionsInfo) {
+                    reject(errSubmissionsInfo)
+                } else {
+                    resolve(dataSubmissionsInfo)
+                }
+            })
+        })
+    },
+
+    //get criteria info
+    getCriteriaInfo: function (criteriaId) {
+        return new Promise(function (resolve, reject) {
+            db.get().collection('criteria').find({ 'externalId': criteriaId }, { 'evidences': 1 }).toArray(function (errCriteria, dataCriteria) {
+                if (errCriteria) {
+                    reject(errCriteria)
+                } else {
+                    resolve(dataCriteria)
+                }
+            })
+        })
     }
 }
