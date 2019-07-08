@@ -958,7 +958,7 @@ module.exports = {
                                     }
                                 }
                             }
-                            const fields = [keys[0], keys[1], {label:keys[2] + keys1[0],value:keys[2] + '.' + keys1[0]}, {label:keys[2] + keys1[1],value:keys[2] + '.' + keys1[1]}, {label:keys1[2] + keys2[0],value:keys[2] + '.' + keys1[2] + '.' + keys2[0]}, {label:keys1[2] + keys2[1],value:keys[2] + '.' + keys1[2] + '.' + keys2[1]},{label:keys2[2] + keys3[0],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[0]}, {label:keys2[2] + keys3[1],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[1]}, {label:keys4[0],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[0]}, {label:keys4[1],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[1]}, {label:keys4[2],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[2]}, {label:keys4[3],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[3]}, {label:keys4[4],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[4]}, {label:keys4[5],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[5]}, {label:keys4[6],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[6]}, {label:keys4[7],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[7]}];
+                            const fields = [keys[0], keys[1], { label: keys[2] + keys1[0], value: keys[2] + '.' + keys1[0] }, { label: keys[2] + keys1[1], value: keys[2] + '.' + keys1[1] }, { label: keys1[2] + keys2[0], value: keys[2] + '.' + keys1[2] + '.' + keys2[0] }, { label: keys1[2] + keys2[1], value: keys[2] + '.' + keys1[2] + '.' + keys2[1] }, { label: keys2[2] + keys3[0], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[0] }, { label: keys2[2] + keys3[1], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[1] }, { label: keys4[0], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[0] }, { label: keys4[1], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[1] }, { label: keys4[2], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[2] }, { label: keys4[3], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[3] }, { label: keys4[4], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[4] }, { label: keys4[5], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[5] }, { label: keys4[6], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[6] }, { label: keys4[7], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[7] }];
                             const json2csvParser = new Parser({ fields, unwind: [keys[2], keys[2] + '.' + keys1[2], keys[2] + '.' + keys1[2] + '.' + keys2[2], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2]] });
                             const csv = json2csvParser.parse(resTheme);
                             resFramework.send(csv)
@@ -976,7 +976,7 @@ module.exports = {
                                     }
                                 }
                             }
-                            const fields = [keys[0], keys[1], {label:keys[2] + keys1[0],value:keys[2] + '.' + keys1[0]}, {label:keys[2] + keys1[1],value:keys[2] + '.' + keys1[1]}, {label:keys1[2] + keys2[0],value:keys[2] + '.' + keys1[2] + '.' + keys2[0]}, {label:keys1[2] + keys2[1],value:keys[2] + '.' + keys1[2] + '.' + keys2[1]}, {label:keys3[0],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[0]}, {label:keys3[1],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[1]}, {label:keys3[2],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2]}, {label:keys3[3],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[3]}, {label:keys3[4],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[4]}, {label:keys3[5],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[5]}, {label:keys3[6],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[6]}, {label:keys3[7],value:keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[7]}];
+                            const fields = [keys[0], keys[1], { label: keys[2] + keys1[0], value: keys[2] + '.' + keys1[0] }, { label: keys[2] + keys1[1], value: keys[2] + '.' + keys1[1] }, { label: keys1[2] + keys2[0], value: keys[2] + '.' + keys1[2] + '.' + keys2[0] }, { label: keys1[2] + keys2[1], value: keys[2] + '.' + keys1[2] + '.' + keys2[1] }, { label: keys3[0], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[0] }, { label: keys3[1], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[1] }, { label: keys3[2], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] }, { label: keys3[3], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[3] }, { label: keys3[4], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[4] }, { label: keys3[5], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[5] }, { label: keys3[6], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[6] }, { label: keys3[7], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[7] }];
                             const json2csvParser = new Parser({ fields, unwind: [keys[2], keys[2] + '.' + keys1[2], keys[2] + '.' + keys1[2] + '.' + keys2[2]] });
                             const csv = json2csvParser.parse(resTheme);
                             resFramework.send(csv)
@@ -990,7 +990,7 @@ module.exports = {
                                     var keys2 = Object.keys(resTheme[0][keys[2]][0][keys1[2]])
                                 }
                             }
-                            const fields = [keys[0], keys[1], {label:keys[2] + keys1[0],value:keys[2] + '.' + keys1[0]}, {label:keys[2] + keys1[1],value:keys[2] + '.' + keys1[1]}, {label:keys2[0],value:keys[2] + '.' + keys1[2] + '.' + keys2[0]}, {label:keys2[1],value:keys[2] + '.' + keys1[2] + '.' + keys2[1]}, {label:keys2[2],value:keys[2] + '.' + keys1[2] + '.' + keys2[2]}, {label:keys2[3],value:keys[2] + '.' + keys1[2] + '.' + keys2[3]}, {label:keys2[4],value:keys[2] + '.' + keys1[2] + '.' + keys2[4]}, {label:keys2[5],value:keys[2] + '.' + keys1[2] + '.' + keys2[5]}, {label:keys2[6],value:keys[2] + '.' + keys1[2] + '.' + keys2[6]}, {label:keys2[7],value:keys[2] + '.' + keys1[2] + '.' + keys2[7]}];
+                            const fields = [keys[0], keys[1], { label: keys[2] + keys1[0], value: keys[2] + '.' + keys1[0] }, { label: keys[2] + keys1[1], value: keys[2] + '.' + keys1[1] }, { label: keys2[0], value: keys[2] + '.' + keys1[2] + '.' + keys2[0] }, { label: keys2[1], value: keys[2] + '.' + keys1[2] + '.' + keys2[1] }, { label: keys2[2], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] }, { label: keys2[3], value: keys[2] + '.' + keys1[2] + '.' + keys2[3] }, { label: keys2[4], value: keys[2] + '.' + keys1[2] + '.' + keys2[4] }, { label: keys2[5], value: keys[2] + '.' + keys1[2] + '.' + keys2[5] }, { label: keys2[6], value: keys[2] + '.' + keys1[2] + '.' + keys2[6] }, { label: keys2[7], value: keys[2] + '.' + keys1[2] + '.' + keys2[7] }];
                             const json2csvParser = new Parser({ fields, unwind: [keys[2], keys[2] + '.' + keys1[2]] });
                             const csv = json2csvParser.parse(resTheme);
                             resFramework.send(csv)
@@ -1054,15 +1054,16 @@ module.exports = {
                         themeObj['score'] = themeScore1
                         childrenLen = dataSdiSubmissions[i].theme[j].children.length;
                         var criteriaArr = new Array()
-                        for(var k=0; k<childrenLen; k++){
+                        for (var k = 0; k < childrenLen; k++) {
                             subChildrenLen = dataSdiSubmissions[i].theme[j].children[k].children.length
-                            for(var l=0; l<subChildrenLen; l++){
+                            for (var l = 0; l < subChildrenLen; l++) {
                                 criteriaLen = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria.length
-                                if(criteriaLen !=0){
-                                    for(var m=0; m<criteriaLen; m++){
+                                if (criteriaLen != 0) {
+                                    for (var m = 0; m < criteriaLen; m++) {
                                         var criteriaObj = {}
-                                        criteriaObj['name'] =  dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].name
+                                        criteriaObj['name'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].name
                                         criteriaObj['level'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].score
+                                        criteriaObj['score'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].weightedScore
                                         criteriaArr.push(criteriaObj)
                                     }
                                 }
@@ -1080,8 +1081,8 @@ module.exports = {
                     resReportInfo.send(resSchoolArr)
                 } else if (reportType == 'csv') {
                     resReportInfo.statusCode = 200
-                    const fields = ['schoolId', 'schoolName', 'administrationType', 'sdiIndex', 'sdiScore', {label:'themeName',value:'theme.name'}, {label:'themeIndex',value:'theme.index'}, {label:'themeScore',value:'theme.score'},{label:'criteriaName',value:'theme.criteria.name'},{label:'criteriaLevel',value:'theme.criteria.level'}];
-                    const json2csvParser = new Parser({ fields, unwind: ['theme','theme.criteria'] });
+                    const fields = ['schoolId', 'schoolName', 'administrationType', 'sdiIndex', 'sdiScore', { label: 'themeName', value: 'theme.name' }, { label: 'themeIndex', value: 'theme.index' }, { label: 'themeScore', value: 'theme.score' }, { label: 'criteriaName', value: 'theme.criteria.name' }, { label: 'criteriaLevel', value: 'theme.criteria.level' },{ label: 'criteriaScore', value: 'theme.criteria.score' }];
+                    const json2csvParser = new Parser({ fields, unwind: ['theme', 'theme.criteria'] });
                     const csv = json2csvParser.parse(resSchoolArr);
                     resReportInfo.send(csv)
                 }
@@ -1090,5 +1091,31 @@ module.exports = {
                 console.log("Error in getting sdiSubmissions Information")
                 throw errSdiSubmissions
             })
+    },
+
+    getCriteriaQuestions: async function (reqCriteria, resCriteria) {
+        try {
+            programId = reqCriteria.query.programId
+            reportType = reqCriteria.query.reportType
+            dataSubmissions = await model.getSubmissionInfo(programId)
+            submissionLen = dataSubmissions.length
+            for (var i = 0; i < submissionLen; i++) {
+                criteriaLen = dataSubmissions[i].criterias.length
+                var resCriteriaArr = new Array()
+                for (var j = 0; j < criteriaLen; j++) {
+                    var resCriteriaObj = {}
+                    criteriaId = dataSubmissions[i].criterias[j].externalId
+                    criteriaInfo = await model.getCriteriaInfo(criteriaId)
+                    evidencesLen = criteriaInfo[0].evidences.length
+                    for(var k=0; k<evidencesLen; k++){
+                        console.log(criteriaInfo[0].evidences[k].sections)
+                    }
+                }
+                console.log(i)
+            }
+        } catch (errSubmissions) {
+            console.log("Error in getting SubmissionInfo")
+            throw errSubmissions;
+        }
     }
 }
