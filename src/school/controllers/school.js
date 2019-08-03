@@ -1031,6 +1031,7 @@ module.exports = {
                 var resSchoolObj = {}
                 schoolId = dataSdiSubmissions[i].entityInformation.externalId
                 schoolName = dataSdiSubmissions[i].entityInformation.name
+                schoolApplicability = dataSdiSubmissions[i].schoolApplicability
                 schoolAdministration = dataSdiSubmissions[i].entityInformation.administration
                 schoolScore = dataSdiSubmissions[i].schoolScore
                 if (typeof (schoolScore) == 'number') {
@@ -1040,6 +1041,7 @@ module.exports = {
                 }
                 resSchoolObj['entityId'] = schoolId
                 resSchoolObj['entityName'] = schoolName
+                resSchoolObj['schoolApplicability'] = schoolApplicability
                 resSchoolObj['administrationType'] = schoolAdministration
                 resSchoolObj['sdiIndex'] = dataSdiSubmissions[i].schoolLevel
                 resSchoolObj['sdiScore'] = schoolScore1
@@ -1087,7 +1089,7 @@ module.exports = {
                 resReportInfo.send(resSchoolArr)
             } else if (reportType == 'csv') {
                 resReportInfo.statusCode = 200
-                const fields = ['entityId', 'entityName', 'administrationType', 'sdiIndex', 'sdiScore', { label: 'themeName', value: 'theme.name' }, { label: 'themeIndex', value: 'theme.index' }, { label: 'themeScore', value: 'theme.score' }, { label: 'criteriaName', value: 'theme.criteria.name' }, { label: 'criteriaLevel', value: 'theme.criteria.level' }, { label: 'criteriaWeight', value: 'theme.criteria.score' }];
+                const fields = ['entityId', 'entityName', 'schoolApplicability','administrationType', 'sdiIndex', 'sdiScore', { label: 'themeName', value: 'theme.name' }, { label: 'themeIndex', value: 'theme.index' }, { label: 'themeScore', value: 'theme.score' }, { label: 'criteriaName', value: 'theme.criteria.name' }, { label: 'criteriaLevel', value: 'theme.criteria.level' }, { label: 'criteriaWeight', value: 'theme.criteria.score' }];
                 const json2csvParser = new Parser({ fields, unwind: ['theme', 'theme.criteria'] });
                 const csv = json2csvParser.parse(resSchoolArr);
                 resReportInfo.send(csv)
@@ -1106,6 +1108,7 @@ module.exports = {
                 var resSchoolObj = {}
                 schoolId = dataSdiSubmissions[i].entityInformation.externalId
                 schoolName = dataSdiSubmissions[i].entityInformation.name
+                schoolApplicability = dataSdiSubmissions[i].schoolApplicability
                 schoolAdministration = dataSdiSubmissions[i].entityInformation.administration
                 schoolScore = dataSdiSubmissions[i].schoolScore
                 if (typeof (schoolScore) == 'number') {
@@ -1115,6 +1118,7 @@ module.exports = {
                 }
                 resSchoolObj['entityId'] = schoolId
                 resSchoolObj['entityName'] = schoolName
+                resSchoolObj['schoolApplicability'] = schoolApplicability
                 resSchoolObj['administrationType'] = schoolAdministration
                 resSchoolObj['sdiIndex'] = dataSdiSubmissions[i].schoolLevel
                 resSchoolObj['sdiScore'] = schoolScore1
@@ -1163,7 +1167,7 @@ module.exports = {
                 resReportInfo.send(resSchoolArr)
             } else if (reportType == 'csv') {
                 resReportInfo.statusCode = 200
-                const fields = ['entityId', 'entityName', 'administrationType', 'sdiIndex', 'sdiScore', { label: 'themeName', value: 'theme.name' }, { label: 'themeIndex', value: 'theme.index' }, { label: 'themeScore', value: 'theme.score' }, { label: 'criteriaName', value: 'theme.criteria.name' }, { label: 'criteriaLevel', value: 'theme.criteria.level' }, { label: 'criteriaWeight', value: 'theme.criteria.score' }];
+                const fields = ['entityId', 'entityName', 'schoolApplicability','administrationType', 'sdiIndex', 'sdiScore', { label: 'themeName', value: 'theme.name' }, { label: 'themeIndex', value: 'theme.index' }, { label: 'themeScore', value: 'theme.score' }, { label: 'criteriaName', value: 'theme.criteria.name' }, { label: 'criteriaLevel', value: 'theme.criteria.level' }, { label: 'criteriaWeight', value: 'theme.criteria.score' }];
                 const json2csvParser = new Parser({ fields, unwind: ['theme', 'theme.criteria'] });
                 const csv = json2csvParser.parse(resSchoolArr);
                 resReportInfo.send(csv)
