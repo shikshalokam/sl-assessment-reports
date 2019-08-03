@@ -1,5 +1,4 @@
 var db = require('../../mongo/db');
-var dbProd = require('../../mongo/dbProd');
 var ObjectId = require('mongodb').ObjectId;
 var logger = require('../../utils/logger');
 
@@ -190,7 +189,7 @@ module.exports = {
     //get Framework Info
     getFrameworkInfo: function (frameworkId) {
         return new Promise(function (resolve, reject) {
-            dbProd.get().collection('solutions').find({ "externalId": frameworkId }).toArray(function (errFrameworkInfo, getFrameworkInfo) {
+            db.get().collection('solutions').find({ "externalId": frameworkId }).toArray(function (errFrameworkInfo, getFrameworkInfo) {
                 if (errFrameworkInfo) {
                     reject(errFrameworkInfo)
                 } else {
@@ -203,7 +202,7 @@ module.exports = {
     //get Criteria Info
     getCriteriaInfo: function (criteriaId) {
         return new Promise(function (resolve, reject) {
-            dbProd.get().collection('criteria').find({ "_id": ObjectId(criteriaId) }).toArray(function (errcriteriaInfo, getcriteriaInfo) {
+            db.get().collection('criteria').find({ "_id": ObjectId(criteriaId) }).toArray(function (errcriteriaInfo, getcriteriaInfo) {
                 if (errcriteriaInfo) {
                     reject(errcriteriaInfo)
                 } else {
@@ -216,7 +215,7 @@ module.exports = {
     //get Submissions Info
     getSubmissionInfo: function (programId) {
         return new Promise(function (resolve, reject) {
-            dbProd.get().collection('submissions').find({ "$and": [{ "status": "completed" }, { "programExternalId": programId }] }, { 'criterias': 1, 'answers': 1 }).toArray(function (errSubmissionsInfo, dataSubmissionsInfo) {
+            db.get().collection('submissions').find({ "$and": [{ "status": "completed" }, { "programExternalId": programId }] }, { 'criterias': 1, 'answers': 1 }).toArray(function (errSubmissionsInfo, dataSubmissionsInfo) {
                 if (errSubmissionsInfo) {
                     reject(errSubmissionsInfo)
                 } else {
@@ -229,7 +228,7 @@ module.exports = {
     //get criteria info
     getCriteriaInfo: function (criteriaId) {
         return new Promise(function (resolve, reject) {
-            dbProd.get().collection('criteria').find({ 'externalId': criteriaId }, { 'evidences': 1 }).toArray(function (errCriteria, dataCriteria) {
+            db.get().collection('criteria').find({ 'externalId': criteriaId }, { 'evidences': 1 }).toArray(function (errCriteria, dataCriteria) {
                 if (errCriteria) {
                     reject(errCriteria)
                 } else {
