@@ -9,7 +9,7 @@ module.exports = {
   connect: function (url, done) {
     if (state.db) return done()
 
-    MongoClient.connect(url, function (err, client) {
+    MongoClient.connectProd(url, function (err, client) {
       if (err) return done(err)
       db = client.db(config.mongoproddb)
       state.db = db
