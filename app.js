@@ -4,17 +4,18 @@ var path = require('path');
 var swaggerUi = require('swagger-ui-express');
 var swaggerDocument = require('./swagger/swagger.json');
 var app = express();
+const fileUpload = require('express-fileupload');
 var db = require('./src/mongo/db');
 var routes = require('./src/school/routes/school');
 var config = require('./src/config/config');
 var logger = require('./src/utils/logger');
 
+app.use(fileUpload());
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

@@ -5,6 +5,8 @@ var router = express.Router({ mergeParams: true });
 
 var logger = require('../../utils/logger');
 
+router.route('/schools/reportCard').post(controllers.getReportInfo);
+
 router.route('/schools/:programId').post(controllers.getAllSchoolInfo);
 
 router.route('/schools/search/:programId').post(controllers.getSchoolBySearchText);
@@ -17,7 +19,7 @@ router.route('/schools/schoolFilters/:programId').get(controllers.getSchoolFilte
 
 router.route('/schools/frameworkInfo').get(controllers.getFrameworkInfo);
 
-router.route('/schools/reportCard').get(controllers.getReportInfo);
+// router.route('/schools/reportCard').post(controllers.getReportInfo);
 
 router.route('/schools/criteriaQuestions').get(controllers.getCriteriaQuestions);
 
