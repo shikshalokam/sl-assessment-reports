@@ -12,6 +12,7 @@ module.exports = {
     getAllSchoolInfo: async function (reqSchoolInfo, resSchoolInfo) {
         programId = reqSchoolInfo.params.programId;
         if (!reqSchoolInfo.body.request) {
+            resSchoolInfo.set('Content-Type', 'application/json')
             resSchoolInfo.statusCode = 404
             resSchoolInfo.send({
                 responseCode: "NOT FOUND",
@@ -23,6 +24,7 @@ module.exports = {
             })
         }
         if (!reqSchoolInfo.body.request.filters) {
+            resSchoolInfo.set('Content-Type', 'application/json')
             resSchoolInfo.statusCode = 404
             resSchoolInfo.send({
                 responseCode: "NOT FOUND",
@@ -34,6 +36,7 @@ module.exports = {
             })
         }
         if (!reqSchoolInfo.body.request.filters.schoolId) {
+            resSchoolInfo.set('Content-Type', 'application/json')
             resSchoolInfo.statusCode = 404
             resSchoolInfo.send({
                 responseCode: "NOT FOUND",
@@ -54,56 +57,57 @@ module.exports = {
                     .then(function (dataAllSchool) {
                         var schoolAllArray = new Array();
                         for (var i = 0; i < dataAllSchool.length; i++) {
-                            if(!dataAllSchool[i].schoolInformation.awardsWon){
+                            if (!dataAllSchool[i].entityInformation.awardsWon) {
                                 awardsWon = []
                             } else {
-                                awardsWon = dataAllSchool[i].schoolInformation.awardsWon
+                                awardsWon = dataAllSchool[i].entityInformation.awardsWon
                             }
-                            if(!dataAllSchool[i].schoolInformation.innovativePractices){
+                            if (!dataAllSchool[i].entityInformation.innovativePractices) {
                                 innovativePractices = []
                             } else {
-                                innovativePractices = dataAllSchool[i].schoolInformation.innovativePractices
+                                innovativePractices = dataAllSchool[i].entityInformation.innovativePractices
                             }
-                            if(!dataAllSchool[i].schoolInformation.website){
+                            if (!dataAllSchool[i].entityInformation.website) {
                                 website = ""
                             } else {
-                                website = dataAllSchool[i].schoolInformation.website
+                                website = dataAllSchool[i].entityInformation.website
                             }
                             schoolArrGetAllInfo = {
-                                externalId: dataAllSchool[i].schoolInformation.externalId,
-                                name: dataAllSchool[i].schoolInformation.name,
+                                externalId: dataAllSchool[i].entityInformation.externalId,
+                                name: dataAllSchool[i].entityInformation.name,
                                 sdiLevel: dataAllSchool[i].schoolLevel,
-                                totalBoys: dataAllSchool[i].schoolInformation.totalBoys,
-                                highestGrade: dataAllSchool[i].schoolInformation.highestGrade,
-                                totalGirls: dataAllSchool[i].schoolInformation.totalGirls,
-                                phone: dataAllSchool[i].schoolInformation.phone,
-                                emailId : dataAllSchool[i].schoolInformation.emailId,
-                                addressLine1: dataAllSchool[i].schoolInformation.addressLine1,
-                                state: dataAllSchool[i].schoolInformation.state,
-                                principalName: dataAllSchool[i].schoolInformation.principalName,
-                                administration: dataAllSchool[i].schoolInformation.administration,
-                                gender: dataAllSchool[i].schoolInformation.gender,
-                                lowestGrade: dataAllSchool[i].schoolInformation.lowestGrade,
-                                pincode: dataAllSchool[i].schoolInformation.pincode,
-                                emailId2 : dataAllSchool[i].schoolInformation.emailId2,
-                                country: dataAllSchool[i].schoolInformation.country,
-                                districtName: dataAllSchool[i].schoolInformation.districtName,
-                                gpsLocation: dataAllSchool[i].schoolInformation.gpsLocation,
-                                addressLine2: dataAllSchool[i].schoolInformation.addressLine2,
-                                schoolNo : dataAllSchool[i].schoolInformation.schooolNo,
-                                districtId: dataAllSchool[i].schoolInformation.districtId,
-                                city: dataAllSchool[i].schoolInformation.city,
-                                zoneId: dataAllSchool[i].schoolInformation.zoneId,
-                                shift: dataAllSchool[i].schoolInformation.shift,
-                                totalStudents: dataAllSchool[i].schoolInformation.totalStudents,
-                                streamOffered: dataAllSchool[i].schoolInformation.streamOffered,
-                                awardsWon : awardsWon,
-                                innovativePractices : innovativePractices,
-                                website : website
-                                // themes : dataAllSchool[i].theme
+                                totalBoys: dataAllSchool[i].entityInformation.totalBoys,
+                                highestGrade: dataAllSchool[i].entityInformation.highestGrade,
+                                totalGirls: dataAllSchool[i].entityInformation.totalGirls,
+                                phone: dataAllSchool[i].entityInformation.phone,
+                                emailId: dataAllSchool[i].entityInformation.emailId,
+                                addressLine1: dataAllSchool[i].entityInformation.addressLine1,
+                                state: dataAllSchool[i].entityInformation.state,
+                                principalName: dataAllSchool[i].entityInformation.principalName,
+                                administration: dataAllSchool[i].entityInformation.administration,
+                                gender: dataAllSchool[i].entityInformation.gender,
+                                lowestGrade: dataAllSchool[i].entityInformation.lowestGrade,
+                                pincode: dataAllSchool[i].entityInformation.pincode,
+                                emailId2: dataAllSchool[i].entityInformation.emailId2,
+                                country: dataAllSchool[i].entityInformation.country,
+                                districtName: dataAllSchool[i].entityInformation.districtName,
+                                gpsLocation: dataAllSchool[i].entityInformation.gpsLocation,
+                                addressLine2: dataAllSchool[i].entityInformation.addressLine2,
+                                schoolNo: dataAllSchool[i].entityInformation.schooolNo,
+                                districtId: dataAllSchool[i].entityInformation.districtId,
+                                city: dataAllSchool[i].entityInformation.city,
+                                zoneId: dataAllSchool[i].entityInformation.zoneId,
+                                shift: dataAllSchool[i].entityInformation.shift,
+                                totalStudents: dataAllSchool[i].entityInformation.totalStudents,
+                                streamOffered: dataAllSchool[i].entityInformation.streamOffered,
+                                awardsWon: awardsWon,
+                                innovativePractices: innovativePractices,
+                                website: website,
+                                themes: dataAllSchool[i].theme
                             }
                             schoolAllArray.push(schoolArrGetAllInfo)
                         }
+                        resSchoolInfo.set('Content-Type', 'application/json')
                         resSchoolInfo.statusCode = 200;
                         if (resSchoolInfo.statusCode == 200) {
                             responseCode = "OK"
@@ -133,55 +137,55 @@ module.exports = {
                     if (isNaN(querySchool[i]) == false) {
                         try {
                             //get Particular School Info for given schoolId
-                            let dataSpecificSchool = await model.getSchoolInfoSpecific(querySchool[i],programId);
+                            let dataSpecificSchool = await model.getSchoolInfoSpecific(querySchool[i], programId);
                             if (dataSpecificSchool != undefined) {
-                                if(!dataSpecificSchool.schoolInformation.awardsWon){
+                                if (!dataSpecificSchool.entityInformation.awardsWon) {
                                     awardsWon = []
                                 } else {
-                                    awardsWon = dataSpecificSchool.schoolInformation.awardsWon
+                                    awardsWon = dataSpecificSchool.entityInformation.awardsWon
                                 }
-                                if(!dataSpecificSchool.schoolInformation.innovativePractices){
+                                if (!dataSpecificSchool.entityInformation.innovativePractices) {
                                     innovativePractices = []
                                 } else {
-                                    innovativePractices = dataSpecificSchool.schoolInformation.innovativePractices
+                                    innovativePractices = dataSpecificSchool.entityInformation.innovativePractices
                                 }
-                                if(!dataSpecificSchool.schoolInformation.website){
+                                if (!dataSpecificSchool.entityInformation.website) {
                                     website = ""
                                 } else {
-                                    website = dataSpecificSchool.schoolInformation.website
+                                    website = dataSpecificSchool.entityInformation.website
                                 }
                                 schooldataSpecificInfo = {
-                                    externalId: dataSpecificSchool.schoolInformation.externalId,
-                                    name: dataSpecificSchool.schoolInformation.name,
-                                    sdiLevel: dataSpecificSchool.schoolInformation.sdiLevel,
-                                    totalBoys: dataSpecificSchool.schoolInformation.totalBoys,
-                                    highestGrade: dataSpecificSchool.schoolInformation.highestGrade,
-                                    totalGirls: dataSpecificSchool.schoolInformation.totalGirls,
-                                    phone: dataSpecificSchool.schoolInformation.phone,
-                                    emailId : dataSpecificSchool.schoolInformation.emailId,
-                                    addressLine1: dataSpecificSchool.schoolInformation.addressLine1,
-                                    state: dataSpecificSchool.schoolInformation.state,
-                                    principalName: dataSpecificSchool.schoolInformation.principalName,
-                                    administration: dataSpecificSchool.schoolInformation.administration,
-                                    gender: dataSpecificSchool.schoolInformation.gender,
-                                    lowestGrade: dataSpecificSchool.schoolInformation.lowestGrade,
-                                    pincode: dataSpecificSchool.schoolInformation.pincode,
-                                    emailId2 : dataSpecificSchool.schoolInformation.emailId2,
-                                    country: dataSpecificSchool.schoolInformation.country,
-                                    districtName: dataSpecificSchool.schoolInformation.districtName,
-                                    gpsLocation: dataSpecificSchool.schoolInformation.gpsLocation,
-                                    addressLine2: dataSpecificSchool.schoolInformation.addressLine2,
-                                    schoolNo : dataSpecificSchool.schoolInformation.schooolNo,
-                                    districtId: dataSpecificSchool.schoolInformation.districtId,
-                                    city: dataSpecificSchool.schoolInformation.city,
-                                    zoneId: dataSpecificSchool.schoolInformation.zoneId,
-                                    shift: dataSpecificSchool.schoolInformation.shift,
-                                    totalStudents: dataSpecificSchool.schoolInformation.totalStudents,
-                                    streamOffered: dataSpecificSchool.schoolInformation.streamOffered,
-                                    // themes : dataSpecificSchool.theme,
-                                    awardsWon : awardsWon,
-                                    innovativePractices : innovativePractices,
-                                    website : website
+                                    externalId: dataSpecificSchool.entityInformation.externalId,
+                                    name: dataSpecificSchool.entityInformation.name,
+                                    sdiLevel: dataSpecificSchool.entityInformation.sdiLevel,
+                                    totalBoys: dataSpecificSchool.entityInformation.totalBoys,
+                                    highestGrade: dataSpecificSchool.entityInformation.highestGrade,
+                                    totalGirls: dataSpecificSchool.entityInformation.totalGirls,
+                                    phone: dataSpecificSchool.entityInformation.phone,
+                                    emailId: dataSpecificSchool.entityInformation.emailId,
+                                    addressLine1: dataSpecificSchool.entityInformation.addressLine1,
+                                    state: dataSpecificSchool.entityInformation.state,
+                                    principalName: dataSpecificSchool.entityInformation.principalName,
+                                    administration: dataSpecificSchool.entityInformation.administration,
+                                    gender: dataSpecificSchool.entityInformation.gender,
+                                    lowestGrade: dataSpecificSchool.entityInformation.lowestGrade,
+                                    pincode: dataSpecificSchool.entityInformation.pincode,
+                                    emailId2: dataSpecificSchool.entityInformation.emailId2,
+                                    country: dataSpecificSchool.entityInformation.country,
+                                    districtName: dataSpecificSchool.entityInformation.districtName,
+                                    gpsLocation: dataSpecificSchool.entityInformation.gpsLocation,
+                                    addressLine2: dataSpecificSchool.entityInformation.addressLine2,
+                                    schoolNo: dataSpecificSchool.entityInformation.schooolNo,
+                                    districtId: dataSpecificSchool.entityInformation.districtId,
+                                    city: dataSpecificSchool.entityInformation.city,
+                                    zoneId: dataSpecificSchool.entityInformation.zoneId,
+                                    shift: dataSpecificSchool.entityInformation.shift,
+                                    totalStudents: dataSpecificSchool.entityInformation.totalStudents,
+                                    streamOffered: dataSpecificSchool.entityInformation.streamOffered,
+                                    themes: dataSpecificSchool.theme,
+                                    awardsWon: awardsWon,
+                                    innovativePractices: innovativePractices,
+                                    website: website
                                 }
                                 schoolSpecificInfo.push(schooldataSpecificInfo)
                             }
@@ -192,6 +196,7 @@ module.exports = {
                         }
                     }
                     else {
+                        resSchoolInfo.set('Content-Type', 'application/json')
                         resSchoolInfo.statusCode = 400
                         resSchoolInfo.send({
                             responseCode: "CLIENT_ERROR",
@@ -205,6 +210,7 @@ module.exports = {
                         return
                     }
                 }
+                resSchoolInfo.set('Content-Type', 'application/json')
                 resSchoolInfo.statusCode = 200;
                 if (resSchoolInfo.statusCode == 200) {
                     responseCode = "OK"
@@ -222,6 +228,7 @@ module.exports = {
             }
         }
         else {
+            resSchoolInfo.set('Content-Type', 'application/json')
             resSchoolInfo.statusCode = 400
             resSchoolInfo.send({
                 responseCode: "CLIENT_ERROR",
@@ -267,6 +274,7 @@ module.exports = {
                                         schoolDistrict.push(schoolDistrictObj)
                                     }
                                 }
+                                resGetFilters.set('Content-Type', 'application/json')
                                 resGetFilters.statusCode = 200;
                                 if (resGetFilters.statusCode == 200) {
                                     responseCode = "OK"
@@ -305,6 +313,7 @@ module.exports = {
     getSchoolBySearchText: function (reqSearchText, resSearchText) {
         programId = reqSearchText.params.programId
         if (!reqSearchText.body.request) {
+            resSearchText.set('Content-Type', 'application/json')
             resSearchText.statusCode = 404
             resSearchText.send({
                 responseCode: "NOT FOUND",
@@ -316,6 +325,7 @@ module.exports = {
             })
         }
         if (!reqSearchText.body.request.filters) {
+            resSearchText.set('Content-Type', 'application/json')
             resSearchText.statusCode = 404
             resSearchText.send({
                 responseCode: "NOT FOUND",
@@ -327,6 +337,7 @@ module.exports = {
             })
         }
         if (!reqSearchText.body.request.filters['searchText']) {
+            resSearchText.set('Content-Type', 'application/json')
             resSearchText.statusCode = 404
             resSearchText.send({
                 responseCode: "NOT FOUND",
@@ -340,16 +351,17 @@ module.exports = {
         if ((reqSearchText.body.request.filters.searchText) != "") {
             searchText = reqSearchText.body.request.filters.searchText;
             // search school by searchText on matching indexes in mongodb collection
-            model.getSchoolBySearchText(searchText,programId)
+            model.getSchoolBySearchText(searchText, programId)
                 .then(function (dataSearchText) {
                     var schoolSearchArr = new Array();
                     for (var i = 0; i < dataSearchText.length; i++) {
                         resultSearchTextObj = {
-                            externalId: dataSearchText[i].schoolInformation.externalId,
-                            name: dataSearchText[i].schoolInformation.name
+                            externalId: dataSearchText[i].entityInformation.externalId,
+                            name: dataSearchText[i].entityInformation.name
                         }
                         schoolSearchArr.push(resultSearchTextObj)
                     }
+                    resSearchText.set('Content-Type', 'application/json')
                     resSearchText.statusCode = 200;
                     if (resSearchText.statusCode == 200) {
                         responseCode = "OK"
@@ -404,7 +416,7 @@ module.exports = {
                 var sdiLevelCalcArr = new Array();
                 for (var i = 0; i < dataProgramMetrics.length; i++) {
                     //total number of schools for this programId
-                    if (dataProgramMetrics[i].schoolInformation.externalId) {
+                    if (dataProgramMetrics[i].entityInformation.externalId) {
                         totalSchoolCount = totalSchoolCount + 1;
                     }
                     //check for schoolRating is string or number
@@ -604,7 +616,7 @@ module.exports = {
                 else if (secondHighestSdiLevel == sdiLevel1) {
                     secondHighSchoolLevel = 1;
                 }
-                
+
                 //get total number of government schools in mongodb collections
                 model.getGovSchools(programId)
                     .then(function (dataGovSchools) {
@@ -613,6 +625,7 @@ module.exports = {
                         model.getPrivateSchools(programId)
                             .then(function (dataPrivSchools) {
                                 privateSchools = dataPrivSchools.length;
+                                resProgramMetrics.set('Content-Type', 'application/json')
                                 resProgramMetrics.statusCode = 200;
                                 if (resProgramMetrics.statusCode == 200) {
                                     responseCode = "OK"
@@ -703,7 +716,7 @@ module.exports = {
                             districtL4Perc1 = districtL4Perc.toFixed(1)
                             // districtL4Perc1 = ParseInt(districtL4Perc.toFixed(2) + '%)
                             var districtRes = {
-                                districtName: dataDistrictInfo[0].schoolInformation.districtName,
+                                districtName: dataDistrictInfo[0].entityInformation.districtName,
                                 totalSchool: schoolCountDistrict,
                                 avgSdiOfDistrict: districtwiseSdiAvg1,
                                 level1Percent: districtL1Perc1,
@@ -730,7 +743,7 @@ module.exports = {
                         delhiSchoolL3 = 0;
                         delhiSchoolL4 = 0;
                         for (var k = 0; k < dataWholeDelhi.length; k++) {
-                            if (dataWholeDelhi[k].schoolInformation.districtName && dataWholeDelhi[k].schoolInformation.districtName != "" && isNaN(dataWholeDelhi[k].schoolLevel) == false) {
+                            if (dataWholeDelhi[k].entityInformation.districtName && dataWholeDelhi[k].entityInformation.districtName != "" && isNaN(dataWholeDelhi[k].schoolLevel) == false) {
                                 if (dataWholeDelhi[k].schoolLevel == 1) {
                                     delhiSchoolL1 = delhiSchoolL1 + 1;
                                 }
@@ -753,6 +766,7 @@ module.exports = {
                         delhiL3Percent1 = delhiL3Percent.toFixed(1)
                         delhiL4Percent = (delhiSchoolL4 / dataWholeDelhi.length) * 100;
                         delhiL4Percent1 = delhiL4Percent.toFixed(1)
+                        resDistrictMetrics.set('Content-Type', 'appli')
                         resDistrictMetrics.statusCode = 200;
                         if (resDistrictMetrics.statusCode == 200) {
                             responseCode = "OK"
@@ -925,8 +939,10 @@ module.exports = {
                     resTheme.push(resultTheme)
                 }
                 if (reportType == "json") {
+                    resFramework.statusCode = 200
                     resFramework.send(resTheme)
                 } else if (reportType == "csv") {
+                    resFramework.statusCode = 200
                     if (Array.isArray(dataFrameworkInfo[0].themes[0].children[0].children) == true) {
                         if (Array.isArray(dataFrameworkInfo[0].themes[0].children[0].children[0].criteria) == true) {
                             var keys = Object.keys(resTheme[0])
@@ -942,7 +958,7 @@ module.exports = {
                                     }
                                 }
                             }
-                            const fields = [keys[0], keys[1], keys[2] + '.' + keys1[0], keys[2] + '.' + keys1[1], keys[2] + '.' + keys1[2] + '.' + keys2[0], keys[2] + '.' + keys1[2] + '.' + keys2[1], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[0], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[1], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[0], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[1], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[2], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[3], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[4], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[5], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[6], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[7]];
+                            const fields = [keys[0], keys[1], { label: keys[2] + keys1[0], value: keys[2] + '.' + keys1[0] }, { label: keys[2] + keys1[1], value: keys[2] + '.' + keys1[1] }, { label: keys1[2] + keys2[0], value: keys[2] + '.' + keys1[2] + '.' + keys2[0] }, { label: keys1[2] + keys2[1], value: keys[2] + '.' + keys1[2] + '.' + keys2[1] }, { label: keys2[2] + keys3[0], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[0] }, { label: keys2[2] + keys3[1], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[1] }, { label: keys4[0], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[0] }, { label: keys4[1], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[1] }, { label: keys4[2], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[2] }, { label: keys4[3], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[3] }, { label: keys4[4], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[4] }, { label: keys4[5], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[5] }, { label: keys4[6], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[6] }, { label: keys4[7], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] + '.' + keys4[7] }];
                             const json2csvParser = new Parser({ fields, unwind: [keys[2], keys[2] + '.' + keys1[2], keys[2] + '.' + keys1[2] + '.' + keys2[2], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2]] });
                             const csv = json2csvParser.parse(resTheme);
                             resFramework.send(csv)
@@ -960,7 +976,7 @@ module.exports = {
                                     }
                                 }
                             }
-                            const fields = [keys[0], keys[1], keys[2] + '.' + keys1[0], keys[2] + '.' + keys1[1], keys[2] + '.' + keys1[2] + '.' + keys2[0], keys[2] + '.' + keys1[2] + '.' + keys2[1], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[0], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[1], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[3], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[4], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[5], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[6], keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[7]];
+                            const fields = [keys[0], keys[1], { label: keys[2] + keys1[0], value: keys[2] + '.' + keys1[0] }, { label: keys[2] + keys1[1], value: keys[2] + '.' + keys1[1] }, { label: keys1[2] + keys2[0], value: keys[2] + '.' + keys1[2] + '.' + keys2[0] }, { label: keys1[2] + keys2[1], value: keys[2] + '.' + keys1[2] + '.' + keys2[1] }, { label: keys3[0], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[0] }, { label: keys3[1], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[1] }, { label: keys3[2], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[2] }, { label: keys3[3], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[3] }, { label: keys3[4], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[4] }, { label: keys3[5], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[5] }, { label: keys3[6], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[6] }, { label: keys3[7], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] + '.' + keys3[7] }];
                             const json2csvParser = new Parser({ fields, unwind: [keys[2], keys[2] + '.' + keys1[2], keys[2] + '.' + keys1[2] + '.' + keys2[2]] });
                             const csv = json2csvParser.parse(resTheme);
                             resFramework.send(csv)
@@ -974,7 +990,7 @@ module.exports = {
                                     var keys2 = Object.keys(resTheme[0][keys[2]][0][keys1[2]])
                                 }
                             }
-                            const fields = [keys[0], keys[1], keys[2] + '.' + keys1[0], keys[2] + '.' + keys1[1], keys[2] + '.' + keys1[2] + '.' + keys2[0], keys[2] + '.' + keys1[2] + '.' + keys2[1], keys[2] + '.' + keys1[2] + '.' + keys2[2], keys[2] + '.' + keys1[2] + '.' + keys2[3], keys[2] + '.' + keys1[2] + '.' + keys2[4], keys[2] + '.' + keys1[2] + '.' + keys2[5], keys[2] + '.' + keys1[2] + '.' + keys2[6], keys[2] + '.' + keys1[2] + '.' + keys2[7]];
+                            const fields = [keys[0], keys[1], { label: keys[2] + keys1[0], value: keys[2] + '.' + keys1[0] }, { label: keys[2] + keys1[1], value: keys[2] + '.' + keys1[1] }, { label: keys2[0], value: keys[2] + '.' + keys1[2] + '.' + keys2[0] }, { label: keys2[1], value: keys[2] + '.' + keys1[2] + '.' + keys2[1] }, { label: keys2[2], value: keys[2] + '.' + keys1[2] + '.' + keys2[2] }, { label: keys2[3], value: keys[2] + '.' + keys1[2] + '.' + keys2[3] }, { label: keys2[4], value: keys[2] + '.' + keys1[2] + '.' + keys2[4] }, { label: keys2[5], value: keys[2] + '.' + keys1[2] + '.' + keys2[5] }, { label: keys2[6], value: keys[2] + '.' + keys1[2] + '.' + keys2[6] }, { label: keys2[7], value: keys[2] + '.' + keys1[2] + '.' + keys2[7] }];
                             const json2csvParser = new Parser({ fields, unwind: [keys[2], keys[2] + '.' + keys1[2]] });
                             const csv = json2csvParser.parse(resTheme);
                             resFramework.send(csv)
@@ -986,5 +1002,207 @@ module.exports = {
                 console.log("Error in getting Framework Info");
                 throw errFrameworkInfo;
             })
+    },
+
+    //get dcpcr report card Info
+    getReportInfo: async function (reqReportInfo, resReportInfo) {
+        if (!reqReportInfo.query.programId && !reqReportInfo.query.reportType) {
+            resReportInfo.statusCode = 404
+            resReportInfo.send({
+                responseCode: "NOT FOUND",
+                result: {
+                    response: {
+                        message: "query string programId and reportType is required field"
+                    }
+                }
+            })
+        }
+        programId = reqReportInfo.query.programId
+        reportType = reqReportInfo.query.reportType
+
+        if (reqReportInfo.files) {
+            schoolIdsFileData = reqReportInfo.files.schoolIds.data.toString('utf8')
+            schoolIdsFileData1 = schoolIdsFileData.split('\n').slice(1)
+            let dataSdiSubmissions = await model.getDcpcrSchoolInfoArr(programId, schoolIdsFileData1)
+            // .then(function (dataSdiSubmissions) {
+            var sudmissionsLen = dataSdiSubmissions.length
+            var resSchoolArr = new Array()
+            for (var i = 0; i < sudmissionsLen; i++) {
+                var resSchoolObj = {}
+                schoolId = dataSdiSubmissions[i].entityInformation.externalId
+                schoolName = dataSdiSubmissions[i].entityInformation.name
+                schoolApplicability = dataSdiSubmissions[i].schoolApplicability
+                schoolAdministration = dataSdiSubmissions[i].entityInformation.administration
+                schoolScore = dataSdiSubmissions[i].schoolScore
+                if (typeof (schoolScore) == 'number') {
+                    schoolScore1 = schoolScore.toFixed(2)
+                } else if (typeof (schoolScore) == 'string') {
+                    schoolScore1 = schoolScore
+                }
+                resSchoolObj['entityId'] = schoolId
+                resSchoolObj['entityName'] = schoolName
+                resSchoolObj['schoolApplicability'] = schoolApplicability
+                resSchoolObj['administrationType'] = schoolAdministration
+                resSchoolObj['sdiIndex'] = dataSdiSubmissions[i].schoolLevel
+                resSchoolObj['sdiScore'] = schoolScore1
+                themeLen = dataSdiSubmissions[i].theme.length
+                var resThemeArr = new Array()
+                for (var j = 0; j < themeLen; j++) {
+                    var themeObj = {}
+                    themeScore = dataSdiSubmissions[i].theme[j].themeScore
+                    if (typeof (themeScore) == 'number') {
+                        themeScore1 = themeScore.toFixed(2)
+                    } else if (typeof (themeScore) == 'string') {
+                        themeScore1 = themeScore
+                    }
+                    themeObj['name'] = dataSdiSubmissions[i].theme[j].name
+                    themeObj['index'] = dataSdiSubmissions[i].theme[j].themeLevel
+                    themeObj['score'] = themeScore1
+                    childrenLen = dataSdiSubmissions[i].theme[j].children.length;
+                    var criteriaArr = new Array()
+                    for (var k = 0; k < childrenLen; k++) {
+                        subChildrenLen = dataSdiSubmissions[i].theme[j].children[k].children.length
+                        for (var l = 0; l < subChildrenLen; l++) {
+                            criteriaLen = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria.length
+                            if (criteriaLen != 0) {
+                                for (var m = 0; m < criteriaLen; m++) {
+                                    if (Object.keys(dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m]).length != 0) {
+                                        var criteriaObj = {}
+                                        criteriaObj['name'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].name
+                                        criteriaObj['level'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].score
+                                        criteriaObj['score'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].weight
+                                        criteriaArr.push(criteriaObj)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    themeObj['criteria'] = criteriaArr
+                    resThemeArr.push(themeObj)
+                }
+                resSchoolObj['theme'] = resThemeArr
+                resSchoolArr.push(resSchoolObj)
+            }
+            // console.log(resSchoolArr)
+            if (reportType == 'json') {
+                resReportInfo.statusCode = 200
+                resReportInfo.send(resSchoolArr)
+            } else if (reportType == 'csv') {
+                resReportInfo.statusCode = 200
+                const fields = ['entityId', 'entityName', 'schoolApplicability','administrationType', 'sdiIndex', 'sdiScore', { label: 'themeName', value: 'theme.name' }, { label: 'themeIndex', value: 'theme.index' }, { label: 'themeScore', value: 'theme.score' }, { label: 'criteriaName', value: 'theme.criteria.name' }, { label: 'criteriaLevel', value: 'theme.criteria.level' }, { label: 'criteriaWeight', value: 'theme.criteria.score' }];
+                const json2csvParser = new Parser({ fields, unwind: ['theme', 'theme.criteria'] });
+                const csv = json2csvParser.parse(resSchoolArr);
+                resReportInfo.send(csv)
+            }
+            // })
+            // .catch(function (errSdiSubmissions) {
+            //     console.log("Error in getting sdiSubmissions Information")
+            //     throw errSdiSubmissions
+            // })
+        } else {
+            let dataSdiSubmissions = await model.getDcpcrAllSchoolInfo(programId)
+            // .then(function (dataSdiSubmissions) {
+            var sudmissionsLen = dataSdiSubmissions.length
+            var resSchoolArr = new Array()
+            for (var i = 0; i < sudmissionsLen; i++) {
+                var resSchoolObj = {}
+                schoolId = dataSdiSubmissions[i].entityInformation.externalId
+                schoolName = dataSdiSubmissions[i].entityInformation.name
+                schoolApplicability = dataSdiSubmissions[i].schoolApplicability
+                schoolAdministration = dataSdiSubmissions[i].entityInformation.administration
+                schoolScore = dataSdiSubmissions[i].schoolScore
+                if (typeof (schoolScore) == 'number') {
+                    schoolScore1 = schoolScore.toFixed(2)
+                } else if (typeof (schoolScore) == 'string') {
+                    schoolScore1 = schoolScore
+                }
+                resSchoolObj['entityId'] = schoolId
+                resSchoolObj['entityName'] = schoolName
+                resSchoolObj['schoolApplicability'] = schoolApplicability
+                resSchoolObj['administrationType'] = schoolAdministration
+                resSchoolObj['sdiIndex'] = dataSdiSubmissions[i].schoolLevel
+                resSchoolObj['sdiScore'] = schoolScore1
+                themeLen = dataSdiSubmissions[i].theme.length
+                var resThemeArr = new Array()
+                for (var j = 0; j < themeLen; j++) {
+                    var themeObj = {}
+                    themeScore = dataSdiSubmissions[i].theme[j].themeScore
+                    if (typeof (themeScore) == 'number') {
+                        themeScore1 = themeScore.toFixed(2)
+                    } else if (typeof (themeScore) == 'string') {
+                        themeScore1 = themeScore
+                    }
+                    themeObj['name'] = dataSdiSubmissions[i].theme[j].name
+                    themeObj['index'] = dataSdiSubmissions[i].theme[j].themeLevel
+                    themeObj['score'] = themeScore1
+                    childrenLen = dataSdiSubmissions[i].theme[j].children.length;
+                    var criteriaArr = new Array()
+                    for (var k = 0; k < childrenLen; k++) {
+                        subChildrenLen = dataSdiSubmissions[i].theme[j].children[k].children.length
+                        for (var l = 0; l < subChildrenLen; l++) {
+                            criteriaLen = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria.length
+                            if (criteriaLen != 0) {
+                                for (var m = 0; m < criteriaLen; m++) {
+                                    if (Object.keys(dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m]).length != 0) {
+                                        var criteriaObj = {}
+                                        criteriaObj['name'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].name
+                                        criteriaObj['level'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].score
+                                        criteriaObj['score'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].weight
+                                        criteriaArr.push(criteriaObj)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    themeObj['criteria'] = criteriaArr
+                    resThemeArr.push(themeObj)
+                }
+                resSchoolObj['theme'] = resThemeArr
+                resSchoolArr.push(resSchoolObj)
+            }
+            // console.log(resSchoolArr)
+            if (reportType == 'json') {
+                console.log(resSchoolArr.length)
+                resReportInfo.statusCode = 200
+                resReportInfo.send(resSchoolArr)
+            } else if (reportType == 'csv') {
+                resReportInfo.statusCode = 200
+                const fields = ['entityId', 'entityName', 'schoolApplicability','administrationType', 'sdiIndex', 'sdiScore', { label: 'themeName', value: 'theme.name' }, { label: 'themeIndex', value: 'theme.index' }, { label: 'themeScore', value: 'theme.score' }, { label: 'criteriaName', value: 'theme.criteria.name' }, { label: 'criteriaLevel', value: 'theme.criteria.level' }, { label: 'criteriaWeight', value: 'theme.criteria.score' }];
+                const json2csvParser = new Parser({ fields, unwind: ['theme', 'theme.criteria'] });
+                const csv = json2csvParser.parse(resSchoolArr);
+                resReportInfo.send(csv)
+            }
+            // })
+            // .catch(function (errSdiSubmissions) {
+            //     console.log("Error in getting sdiSubmissions Information")
+            //     throw errSdiSubmissions
+            // })
+        }
+    },
+
+    getCriteriaQuestions: async function (reqCriteria, resCriteria) {
+        try {
+            programId = reqCriteria.query.programId
+            reportType = reqCriteria.query.reportType
+            dataSubmissions = await model.getSubmissionInfo(programId)
+            submissionLen = dataSubmissions.length
+            for (var i = 0; i < submissionLen; i++) {
+                criteriaLen = dataSubmissions[i].criterias.length
+                var resCriteriaArr = new Array()
+                for (var j = 0; j < criteriaLen; j++) {
+                    var resCriteriaObj = {}
+                    criteriaId = dataSubmissions[i].criterias[j].externalId
+                    criteriaInfo = await model.getCriteriaInfo(criteriaId)
+                    evidencesLen = criteriaInfo[0].evidences.length
+                    for (var k = 0; k < evidencesLen; k++) {
+                        console.log(criteriaInfo[0].evidences[k].sections)
+                    }
+                }
+                console.log(i)
+            }
+        } catch (errSubmissions) {
+            console.log("Error in getting SubmissionInfo")
+            throw errSubmissions;
+        }
     }
 }

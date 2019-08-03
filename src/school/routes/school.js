@@ -5,6 +5,8 @@ var router = express.Router({ mergeParams: true });
 
 var logger = require('../../utils/logger');
 
+router.route('/schools/reportCard').post(controllers.getReportInfo);
+
 router.route('/schools/:programId').post(controllers.getAllSchoolInfo);
 
 router.route('/schools/search/:programId').post(controllers.getSchoolBySearchText);
@@ -16,6 +18,10 @@ router.route('/schools/district/metrics/:programId').get(controllers.getDistrict
 router.route('/schools/schoolFilters/:programId').get(controllers.getSchoolFilters);
 
 router.route('/schools/frameworkInfo').get(controllers.getFrameworkInfo);
+
+// router.route('/schools/reportCard').post(controllers.getReportInfo);
+
+router.route('/schools/criteriaQuestions').get(controllers.getCriteriaQuestions);
 
 router.use((req, res, next) => {
     res.statusCode = 404;
