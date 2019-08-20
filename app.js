@@ -6,7 +6,6 @@ var swaggerDocument = require('./swagger/swagger.json');
 var app = express();
 const fileUpload = require('express-fileupload');
 var db = require('./src/mongo/db');
-var dbprod = require('./src/mongo/dbprod');
 var routes = require('./src/school/routes/school');
 var config = require('./src/config/config');
 var logger = require('./src/utils/logger');
@@ -64,34 +63,12 @@ db.connect('mongodb://' + config.mongohostname + ':' + config.mongoport, functio
   if (err) {
     console.log('Unable to connect to Mongo.');
     console.log(err);
-    // logger.loggererrorschool.error('Unable to connect to Mongo.');
-    // logger.loggererrorschool.error(err);
   } else {
-    app.listen(config.appPortNo, function () {
-      console.log('Listening on port ' + config.appPortNo + '...');
-      console.log('Mongo connected');
-      // logger.loggerinfoschool.info('Listening on port ' + config.appPortNo + '...');
-      // logger.loggerinfoschool.info('Mongo connected')
-    })
-  }
-})
-
-dbprod.connect('mongodb://' + config.mongoprodhostname + ':' + config.mongoprodport, function (err) {
-  if (err) {
-    console.log('Unable to connect to Mongo.');
-    console.log(err);
-    // logger.loggererrorschool.error('Unable to connect to Mongo.');
-    // logger.loggererrorschool.error(err);
-  } else {
-    app.listen(config.appPortNo, function () {
-      console.log('Listening on port ' + config.appPortNo + '...');
-      console.log('Mongo connected');
-      // logger.loggerinfoschool.info('Listening on port ' + config.appPortNo + '...');
-      // logger.loggerinfoschool.info('Mongo connected')
-    })
+      console.log('Local Mongo connected');
+      app.listen(config.appPortNo,function(){
+        console.log('Listening on port ' + config.appPortNo + '...');
+      })
   }
 })
 
 module.exports = app;
-
-

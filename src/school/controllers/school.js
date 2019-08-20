@@ -1051,7 +1051,7 @@ module.exports = {
                     var themeObj = {}
                     themeScore = dataSdiSubmissions[i].theme[j].themeScore
                     if (typeof (themeScore) == 'number') {
-                        themeScore1 = themeScore.toFixed(2)
+                        themeScore1 = themeScore.toFixed(3)
                     } else if (typeof (themeScore) == 'string') {
                         themeScore1 = themeScore
                     }
@@ -1069,6 +1069,7 @@ module.exports = {
                                     if (Object.keys(dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m]).length != 0) {
                                         var criteriaObj = {}
                                         criteriaObj['name'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].name
+                                        criteriaObj['externalId'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].externalId
                                         criteriaObj['level'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].score
                                         criteriaObj['score'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].weight
                                         criteriaArr.push(criteriaObj)
@@ -1089,7 +1090,7 @@ module.exports = {
                 resReportInfo.send(resSchoolArr)
             } else if (reportType == 'csv') {
                 resReportInfo.statusCode = 200
-                const fields = ['entityId', 'entityName', 'schoolApplicability','administrationType', 'sdiIndex', 'sdiScore', { label: 'themeName', value: 'theme.name' }, { label: 'themeIndex', value: 'theme.index' }, { label: 'themeScore', value: 'theme.score' }, { label: 'criteriaName', value: 'theme.criteria.name' }, { label: 'criteriaLevel', value: 'theme.criteria.level' }, { label: 'criteriaWeight', value: 'theme.criteria.score' }];
+                const fields = ['entityId', 'entityName', 'schoolApplicability','administrationType', 'sdiIndex', 'sdiScore', { label: 'themeName', value: 'theme.name' }, { label: 'themeIndex', value: 'theme.index' }, { label: 'themeScore', value: 'theme.score' }, { label: 'criteriaName', value: 'theme.criteria.name' }, { label: 'criteriaExternalId', value: 'theme.criteria.externalId' },{ label: 'criteriaLevel', value: 'theme.criteria.level' }, { label: 'criteriaWeight', value: 'theme.criteria.score' }];
                 const json2csvParser = new Parser({ fields, unwind: ['theme', 'theme.criteria'] });
                 const csv = json2csvParser.parse(resSchoolArr);
                 resReportInfo.send(csv)
@@ -1128,7 +1129,7 @@ module.exports = {
                     var themeObj = {}
                     themeScore = dataSdiSubmissions[i].theme[j].themeScore
                     if (typeof (themeScore) == 'number') {
-                        themeScore1 = themeScore.toFixed(2)
+                        themeScore1 = themeScore.toFixed(3)
                     } else if (typeof (themeScore) == 'string') {
                         themeScore1 = themeScore
                     }
@@ -1146,6 +1147,7 @@ module.exports = {
                                     if (Object.keys(dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m]).length != 0) {
                                         var criteriaObj = {}
                                         criteriaObj['name'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].name
+                                        criteriaObj['externalId'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].externalId
                                         criteriaObj['level'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].score
                                         criteriaObj['score'] = dataSdiSubmissions[i].theme[j].children[k].children[l].criteria[m].weight
                                         criteriaArr.push(criteriaObj)
@@ -1167,7 +1169,7 @@ module.exports = {
                 resReportInfo.send(resSchoolArr)
             } else if (reportType == 'csv') {
                 resReportInfo.statusCode = 200
-                const fields = ['entityId', 'entityName', 'schoolApplicability','administrationType', 'sdiIndex', 'sdiScore', { label: 'themeName', value: 'theme.name' }, { label: 'themeIndex', value: 'theme.index' }, { label: 'themeScore', value: 'theme.score' }, { label: 'criteriaName', value: 'theme.criteria.name' }, { label: 'criteriaLevel', value: 'theme.criteria.level' }, { label: 'criteriaWeight', value: 'theme.criteria.score' }];
+                const fields = ['entityId', 'entityName', 'schoolApplicability','administrationType', 'sdiIndex', 'sdiScore', { label: 'themeName', value: 'theme.name' }, { label: 'themeIndex', value: 'theme.index' }, { label: 'themeScore', value: 'theme.score' }, { label: 'criteriaName', value: 'theme.criteria.name' }, { label: 'criteriaExternalId', value: 'theme.criteria.externalId' },{ label: 'criteriaLevel', value: 'theme.criteria.level' }, { label: 'criteriaWeight', value: 'theme.criteria.score' }];
                 const json2csvParser = new Parser({ fields, unwind: ['theme', 'theme.criteria'] });
                 const csv = json2csvParser.parse(resSchoolArr);
                 resReportInfo.send(csv)
@@ -1184,7 +1186,9 @@ module.exports = {
         try {
             programId = reqCriteria.query.programId
             reportType = reqCriteria.query.reportType
+            console.log(programId)
             dataSubmissions = await model.getSubmissionInfo(programId)
+            console.log(dataSubmissions)
             submissionLen = dataSubmissions.length
             for (var i = 0; i < submissionLen; i++) {
                 criteriaLen = dataSubmissions[i].criterias.length
