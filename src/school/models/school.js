@@ -35,7 +35,7 @@ module.exports = {
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').find({'$and':[{'program.externalId': programId},{'entityInformation.externalId':{'$in':schoolIds}}]}).toArray(function (errDcpcrGetSchoolArr, getDcpcrSchoolInfoDocsArr) {
                 if(errDcpcrGetSchoolArr){
                     reject(errDcpcrGetSchoolArr)
-                } else {
+                } else{
                     resolve(getDcpcrSchoolInfoDocsArr)  
                 }
             })

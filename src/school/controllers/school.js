@@ -1023,7 +1023,11 @@ module.exports = {
         if (reqReportInfo.files) {
             schoolIdsFileData = reqReportInfo.files.schoolIds.data.toString('utf8')
             schoolIdsFileData1 = schoolIdsFileData.split('\n').slice(1)
-            let dataSdiSubmissions = await model.getDcpcrSchoolInfoArr(programId, schoolIdsFileData1)
+            var schoolFileDataArr = new Array()
+            for (var j=0; j < schoolIdsFileData1.length;j++){
+                schoolFileDataArr.push(schoolIdsFileData1[j].replace(/[\r]/g,''))
+            }
+            let dataSdiSubmissions = await model.getDcpcrSchoolInfoArr(programId,schoolFileDataArr)
             // .then(function (dataSdiSubmissions) {
             var sudmissionsLen = dataSdiSubmissions.length
             var resSchoolArr = new Array()
