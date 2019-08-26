@@ -2,8 +2,5 @@ module.exports = {
     mongohostname : <mongodb hostname>,
     mongoport : <mongodb portno>,
     mongodb : <mongodb database name>,
-    mongoprodhostname : <mongodb production hostname>,
-    mongoprodport : <mongodb production portno>,
-    mongoproddb : <mongodb production database name>,
     appPortNo: <app portno>
 }
