@@ -70,5 +70,4 @@ db.connect('mongodb://' + config.mongohostname + ':' + config.mongoport, functio
       })
   }
 })
-
 module.exports = app;
