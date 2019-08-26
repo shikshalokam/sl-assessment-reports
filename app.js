@@ -63,10 +63,8 @@ db.connect('mongodb://' + config.mongohostname + ':' + config.mongoport, functio
   if (err) {
     console.log('Unable to connect to Mongo.');
     console.log(err);
-    // logger.loggererrorschool.error('Unable to connect to Mongo.');
-    // logger.loggererrorschool.error(err);
   } else {
-    console.log('Local Mongo connected');
+      console.log('Local Mongo connected');
       app.listen(config.appPortNo,function(){
         console.log('Listening on port ' + config.appPortNo + '...');
       })
@@ -74,5 +72,3 @@ db.connect('mongodb://' + config.mongohostname + ':' + config.mongoport, functio
 })
 
 module.exports = app;
-
-
