@@ -6,7 +6,11 @@ module.exports = {
     // get all school info
     getAllSchoolInfo: function (programId) {
         return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').find({'program.externalId': programId }).toArray(function (errGetAllSchool, getAllSchoolInfoDocs) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').find({'program.externalId': programId }).toArray(function (errGetAllSchool, getAllSchoolInfoDocs) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if (errGetAllSchool) {
                     reject(errGetAllSchool)
                 } else {
@@ -19,7 +23,11 @@ module.exports = {
     // get dcpcr all school info
     getDcpcrAllSchoolInfo: function (programId) {
         return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').find({'program.externalId': programId }).toArray(function (errDcpcrGetAllSchool, getDcpcrAllSchoolInfoDocs) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').find({'program.externalId': programId }).toArray(function (errDcpcrGetAllSchool, getDcpcrAllSchoolInfoDocs) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if (errDcpcrGetAllSchool) {
                     reject(errDcpcrGetAllSchool)
                 } else {
@@ -32,7 +40,11 @@ module.exports = {
     //get dcpcr multiple schools Arr
     getDcpcrSchoolInfoArr : function(programId,schoolIds){
         return new Promise(function(resolve,reject){
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').find({'$and':[{'program.externalId': programId},{'entityInformation.externalId':{'$in':schoolIds}}]}).toArray(function (errDcpcrGetSchoolArr, getDcpcrSchoolInfoDocsArr) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').find({'$and':[{'program.externalId': programId},{'entityInformation.externalId':{'$in':schoolIds}}]}).toArray(function (errDcpcrGetSchoolArr, getDcpcrSchoolInfoDocsArr) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if(errDcpcrGetSchoolArr){
                     reject(errDcpcrGetSchoolArr)
                 } else {
@@ -45,7 +57,11 @@ module.exports = {
     // get specific(>=1) school info
     getSchoolInfoSpecific: function (querySchool, programId) {
         return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').find({ $and: [{ 'entityInformation.externalId': querySchool }, { 'program.externalId': programId }] }).toArray(function (errSpecificSchool, getSpecificSchoolDocs) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').find({ $and: [{ 'entityInformation.externalId': querySchool }, { 'program.externalId': programId }] }).toArray(function (errSpecificSchool, getSpecificSchoolDocs) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if (errSpecificSchool) {
                     reject(errSpecificSchool)
                 } else {
@@ -59,7 +75,11 @@ module.exports = {
     //get unique value of gender column from schoolInfo 
     getSchoolFilterByGender: function (programId) {
         return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').distinct('entityInformation.gender', { 'program.externalId': programId }, function (errSchoolGender, getSchoolGenderDocs) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').distinct('entityInformation.gender', { 'program.externalId': programId }, function (errSchoolGender, getSchoolGenderDocs) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if (errSchoolGender) {
                     reject(errSchoolGender)
                 } else {
@@ -72,7 +92,11 @@ module.exports = {
     //get unique value of administration column from schoolInfo
     getSchoolFilterByAdmin: function (programId) {
         return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').distinct('entityInformation.administration', { 'program.externalId': programId }, function (errSchoolAdmin, getSchoolAdminDocs) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').distinct('entityInformation.administration', { 'program.externalId': programId }, function (errSchoolAdmin, getSchoolAdminDocs) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if (errSchoolAdmin) {
                     reject(errSchoolAdmin)
                 } else {
@@ -85,7 +109,11 @@ module.exports = {
     //get unique value of districtName column from schoolInfo
     getSchoolFilterByDistrict: function (programId) {
         return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').distinct('entityInformation.districtName', { 'program.externalId': programId }, function (errSchoolDistrict, getSchoolDistrictDocs) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').distinct('entityInformation.districtName', { 'program.externalId': programId }, function (errSchoolDistrict, getSchoolDistrictDocs) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if (errSchoolDistrict) {
                     reject(errSchoolDistrict)
                 } else {
@@ -98,7 +126,11 @@ module.exports = {
     //search school by Text 
     getSchoolBySearchText: function (searchText, programId) {
         return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').find({ $and: [{ $text: { $search: searchText } }, { 'program.externalId': programId }] }, { "entityInformation.name": 1, "entityInformation.externalId": 1, _id: 0 }).toArray(function (errSearchText, getSearchTextDocs) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').find({ $and: [{ $text: { $search: searchText } }, { 'program.externalId': programId }] }, { "entityInformation.name": 1, "entityInformation.externalId": 1, _id: 0 }).toArray(function (errSearchText, getSearchTextDocs) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if (errSearchText) {
                     reject(errSearchText)
                 } else {
@@ -111,7 +143,11 @@ module.exports = {
     //calculation of no of schools to the DCPCR program
     getProgramMetricsSchoolCount: function (programId) {
         return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').find({ 'program.externalId': programId }).toArray(function (errDcpcrProgram, getDcpcrProgramDocs) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').find({ 'program.externalId': programId }).toArray(function (errDcpcrProgram, getDcpcrProgramDocs) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if (errDcpcrProgram) {
                     reject(errDcpcrProgram)
                 } else {
@@ -124,7 +160,11 @@ module.exports = {
     //calculation of no of government schools
     getGovSchools: function (programId) {
         return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').find({ $and: [{ 'entityInformation.administration': { '$regex': '^government$', '$options': 'i' } }, { 'program.externalId': programId }] }).toArray(function (errGovSchool, getGovSchoolsDocs) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').find({ $and: [{ 'entityInformation.administration': { '$regex': '^government$', '$options': 'i' } }, { 'program.externalId': programId }] }).toArray(function (errGovSchool, getGovSchoolsDocs) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if (errGovSchool) {
                     reject(errGovSchool)
                 } else {
@@ -137,7 +177,11 @@ module.exports = {
     //calculation of no of private schools
     getPrivateSchools: function (programId) {
         return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').find({ $and: [{ 'entityInformation.administration': { '$regex': 'unaided', '$options': 'i' } }, { 'program.externalId': programId }] }).toArray(function (errPrivSchools, getPrivSchoolsDocs) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').find({ $and: [{ 'entityInformation.administration': { '$regex': 'unaided', '$options': 'i' } }, { 'program.externalId': programId }] }).toArray(function (errPrivSchools, getPrivSchoolsDocs) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if (errPrivSchools) {
                     reject(errPrivSchools)
                 } else {
@@ -150,7 +194,11 @@ module.exports = {
     //get distinct district name
     getDistinctDistrictName: function (programId) {
         return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').distinct('entityInformation.districtName', { 'program.externalId': programId }, function (errUniqDistrict, getUniqDistrictDocs) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').distinct('entityInformation.districtName', { 'program.externalId': programId }, function (errUniqDistrict, getUniqDistrictDocs) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if (errUniqDistrict) {
                     reject(errUniqDistrict)
                 } else {
@@ -163,7 +211,11 @@ module.exports = {
     //get single district info
     getSingleDistrictInfo: function (programId, districtName) {
         return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').find({ "$and": [{ "program.externalId": programId }, { "entityInformation.districtName": districtName }] }).toArray(function (errSingleDistrict, getSingleDistrictDocs) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').find({ "$and": [{ "program.externalId": programId }, { "entityInformation.districtName": districtName }] }).toArray(function (errSingleDistrict, getSingleDistrictDocs) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if (errSingleDistrict) {
                     reject(errSingleDistrict)
                 } else {
@@ -176,7 +228,11 @@ module.exports = {
     //get school state = delhi
     getSchoolInfoDelhi: function (programId) {
         return new Promise(function (resolve, reject) {
+<<<<<<< HEAD
             db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr2745Schools').find({ "$and": [{ "program.externalId": programId }, { 'entityInformation.state': { '$regex': 'delhi', '$options': 'i' } }] }).toArray(function (errSchoolDelhi, getSchoolDelhiDocs) {
+=======
+            db.get().collection('sdiSchoolSubmissionsFlattened_Dcpcr433Schools').find({ "$and": [{ "program.externalId": programId }, { 'entityInformation.state': { '$regex': 'delhi', '$options': 'i' } }] }).toArray(function (errSchoolDelhi, getSchoolDelhiDocs) {
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                 if (errSchoolDelhi) {
                     reject(errSchoolDelhi)
                 } else {
@@ -214,9 +270,17 @@ module.exports = {
 
     //get Submissions Info
     getSubmissionInfo: function (programId) {
+<<<<<<< HEAD
         return new Promise(function (resolve, reject) {
             db.get().collection('submissions').find({ "$and": [{ "status": "completed" }, { "programExternalId": programId }] }, { 'criterias': 1, 'answers': 1 }).toArray(function (errSubmissionsInfo, dataSubmissionsInfo) {
                 if (errSubmissionsInfo) {
+=======
+        console.log('db')
+        return new Promise(function (resolve, reject) {
+            db.get().collection('submissions').find({ "$and": [{ "status": "completed" }, { "programExternalId": programId }] }, { 'criterias': 1, 'answers': 1 }).toArray(function (errSubmissionsInfo, dataSubmissionsInfo) {
+                if (errSubmissionsInfo) {
+                    console.log(errSubmissionsInfo)
+>>>>>>> e012779592f602332ba3e223709e7d0856718714
                     reject(errSubmissionsInfo)
                 } else {
                     resolve(dataSubmissionsInfo)
