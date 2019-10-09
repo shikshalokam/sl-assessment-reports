@@ -65,7 +65,7 @@ module.exports = {
                             if (!dataAllSchool[i].entityInformation.innovativePractices) {
                                 innovativePractices = []
                             } else {
-                                innovativePractices = dataAllSchool[i].entityInformation.innovativePractices
+                               innovativePractices = dataAllSchool[i].entityInformation.innovativePractices
                             }
                             if (!dataAllSchool[i].entityInformation.website) {
                                 website = ""
@@ -766,7 +766,7 @@ module.exports = {
                         delhiL3Percent1 = delhiL3Percent.toFixed(1)
                         delhiL4Percent = (delhiSchoolL4 / dataWholeDelhi.length) * 100;
                         delhiL4Percent1 = delhiL4Percent.toFixed(1)
-                        resDistrictMetrics.set('Content-Type', 'appli')
+                        resDistrictMetrics.set('Content-Type', 'application/json')
                         resDistrictMetrics.statusCode = 200;
                         if (resDistrictMetrics.statusCode == 200) {
                             responseCode = "OK"
