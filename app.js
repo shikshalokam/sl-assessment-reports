@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: false }));
 //   }
 // };
 
-app.use('/api/v1/dcpcrapi-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/v1/schools/dcpcrapi-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1', routes);
 
 app.use(express.static(path.join(__dirname, 'public')));
